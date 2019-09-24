@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Fast_Food 3.0</string>
+    <string name="btn_jogar">JOGAR AGORA</string>
+    <string name="btn_cupons">MEUS CUPONS</string>
 </resources>

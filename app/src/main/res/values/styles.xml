@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MenuPrincipal" parent="">
+        <item name="android:windowBackground">@drawable/fundo</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>
