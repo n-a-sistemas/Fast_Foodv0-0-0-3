@@ -1,8 +1,10 @@
 package com.example.fast_food30;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class ActivityPerguntas extends AppCompatActivity {
@@ -39,7 +42,6 @@ public class ActivityPerguntas extends AppCompatActivity {
         setContentView(R.layout.activity_perguntas);
         listView = findViewById(R.id.list_view_perguntas);
         conectarBanco();
-        salvarDado();
         leituraBanco();
     }
 
@@ -51,16 +53,17 @@ public class ActivityPerguntas extends AppCompatActivity {
 
     }
 
+
+
+
     private void leituraBanco(){
 
 
+        Random random = new Random();
+        int valor = random.nextInt(6) + 1;
 
 
-
-
-
-
-        databaseReference.child("pergunta").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -84,6 +87,7 @@ public class ActivityPerguntas extends AppCompatActivity {
 
 
 
+
             }
 
             @Override
@@ -97,18 +101,13 @@ public class ActivityPerguntas extends AppCompatActivity {
 
 
 
-    }
-    public void salvarDado() {
 
 
-
-        Pergunta pergunta = new Pergunta("3","Lilas","Azul","Preto","Vermelho","Branco","Qual a cor do cavalo branco de napoleão ? ");
-
-        databaseReference.child("pergunta").child(pergunta.getUuid()).setValue(pergunta);
 
 
 
     }
+
 
 
 
