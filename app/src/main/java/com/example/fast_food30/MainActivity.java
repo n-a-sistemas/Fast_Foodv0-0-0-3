@@ -140,5 +140,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void jogarAgora(View view){
+        Intent intent = new Intent(this, ActivityPerguntas.class);
+        startActivity(intent);
+
+    }
+
+
+
 
 }
