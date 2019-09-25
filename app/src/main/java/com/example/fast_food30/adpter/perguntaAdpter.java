@@ -44,6 +44,7 @@ public class perguntaAdpter extends ArrayAdapter<Pergunta> {
         if(listaItem == null){
             listaItem = LayoutInflater.from(context).inflate(R.layout.layout_perguntas,parent,false );
         }
+
         Pergunta perguntaAtual = tarefas.get(position);
         TextView opçao1= listaItem.findViewById(R.id.btn_opcao1);
         opçao1.setText(perguntaAtual.getOpção_1());
