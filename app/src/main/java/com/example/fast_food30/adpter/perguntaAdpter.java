@@ -44,8 +44,39 @@ public class perguntaAdpter extends ArrayAdapter<Pergunta> {
         if(listaItem == null){
             listaItem = LayoutInflater.from(context).inflate(R.layout.layout_perguntas,parent,false );
         }
+
         Pergunta perguntaAtual = tarefas.get(position);
-        TextView opçoes = listaItem.findViewById(R.id.text_opcoes);
+        TextView opçao1= listaItem.findViewById(R.id.btn_opcao1);
+        opçao1.setText(perguntaAtual.getOpção_1());
+
+
+        TextView opçao2= listaItem.findViewById(R.id.btn_opcao2);
+        opçao2.setText(perguntaAtual.getOpção_2());
+
+
+        TextView opçao3= listaItem.findViewById(R.id.btn_opcao3);
+        opçao3.setText(perguntaAtual.getOpção_3());
+
+        TextView opçao4= listaItem.findViewById(R.id.btn_opcao4);
+        opçao4.setText(perguntaAtual.getOpção_4());
+
+
+        TextView opçaocorreta= listaItem.findViewById(R.id.btn_opcao5);
+        opçaocorreta.setText(perguntaAtual.getOpção_correta());
+
+        TextView tituloPergunta = listaItem.findViewById(R.id.text_titulo);
+        tituloPergunta.setText(perguntaAtual.getTitulo_pergunta());
+
+
+
+
+
+
+
+
+
+
+
 
 
 

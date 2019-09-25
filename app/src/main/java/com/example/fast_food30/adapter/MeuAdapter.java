@@ -5,26 +5,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.fast_food30.R;
-import com.example.fast_food30.modelo.Loja;
+import com.example.fast_food30.modelo.Cupom;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeuAdapter extends ArrayAdapter<Loja> {
+public class MeuAdapter extends ArrayAdapter<Cupom> {
 
     private Context context;
-    private List<Loja> lojas;
+    private List<Cupom> cupons;
 
-    public MeuAdapter(Context context, ArrayList<Loja> list){
+    private TextView textViewNome;
+    private TextView textViewDescricao;
+
+    public MeuAdapter(Context context, ArrayList<Cupom> list){
         super(context, 0, list);
         this.context = context;
-        lojas = list;
+        cupons = list;
     }
 
     @NonNull
@@ -38,7 +41,13 @@ public class MeuAdapter extends ArrayAdapter<Loja> {
                     .inflate(R.layout.layout_list_view, parent, false);
         }
 
-        Loja itemLoja = lojas.get(position);
+        Cupom itemLoja = cupons.get(position);
+
+        TextView nome = listLoja.findViewById(R.id.text_view_nome);
+        nome.setText(itemLoja.getNome());
+
+        TextView descricao = listLoja.findViewById(R.id.text_view_descricao);
+        descricao.setText(itemLoja.getDescricao());
 
         return listLoja;
     }

@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.fast_food30.adpter.perguntaAdpter;
 import com.example.fast_food30.modelo.Pergunta;
@@ -18,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ActivityPerguntas extends AppCompatActivity {
 
@@ -25,7 +29,6 @@ public class ActivityPerguntas extends AppCompatActivity {
     private ListView listView;
     private List<Pergunta> perguntas = new ArrayList<Pergunta>();
     private ArrayAdapter<Pergunta> arrayAdapterPergunta ;
-
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
 
@@ -36,6 +39,7 @@ public class ActivityPerguntas extends AppCompatActivity {
         setContentView(R.layout.activity_perguntas);
         listView = findViewById(R.id.list_view_perguntas);
         conectarBanco();
+        salvarDado();
         leituraBanco();
     }
 
@@ -48,6 +52,13 @@ public class ActivityPerguntas extends AppCompatActivity {
     }
 
     private void leituraBanco(){
+
+
+
+
+
+
+
 
         databaseReference.child("pergunta").addValueEventListener(new ValueEventListener() {
             @Override
@@ -70,6 +81,9 @@ public class ActivityPerguntas extends AppCompatActivity {
 
 
 
+
+
+
             }
 
             @Override
@@ -78,7 +92,24 @@ public class ActivityPerguntas extends AppCompatActivity {
             }
         });
 
+
+
+
+
+
     }
+    public void salvarDado() {
+
+
+
+        Pergunta pergunta = new Pergunta("3","Lilas","Azul","Preto","Vermelho","Branco","Qual a cor do cavalo branco de napoleão ? ");
+
+        databaseReference.child("pergunta").child(pergunta.getUuid()).setValue(pergunta);
+
+
+
+    }
+
 
 
 }

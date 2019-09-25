@@ -2,20 +2,30 @@ package com.example.fast_food30.modelo;
 
 public class Pergunta {
 
-    private String titulo_pergunta;
+
+
+    private String uuid;
     private String opção_1;
     private String opção_2;
     private String opção_3;
     private String opção_4;
-    private String resposta_certa;
+    private String opção_correta;
+    private String titulo_pergunta;
 
 
-    public String getTitulo_pergunta() {
-        return titulo_pergunta;
+
+    public Pergunta(){
+
     }
 
-    public void setTitulo_pergunta(String titulo_pergunta) {
-        this.titulo_pergunta = titulo_pergunta;
+
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getOpção_1() {
@@ -50,33 +60,53 @@ public class Pergunta {
         this.opção_4 = opção_4;
     }
 
-    public String getResposta_certa() {
-        return resposta_certa;
+    public String getOpção_correta() {
+        return opção_correta;
     }
 
-    public void setResposta_certa(String resposta_certa) {
-        this.resposta_certa = resposta_certa;
+    public void setOpção_correta(String opção_correta) {
+        this.opção_correta = opção_correta;
     }
 
+    public String getTitulo_pergunta() {
+        return titulo_pergunta;
+    }
 
-    public Pergunta(String titulo_pergunta, String opção_1, String opção_2, String opção_3, String opção_4, String resposta_certa) {
+    public void setTitulo_pergunta(String titulo_pergunta) {
         this.titulo_pergunta = titulo_pergunta;
+    }
+
+    public Pergunta(String uuid, String opção_1, String opção_2, String opção_3, String opção_4, String opção_correta, String titulo_pergunta) {
+        this.uuid = uuid;
         this.opção_1 = opção_1;
         this.opção_2 = opção_2;
         this.opção_3 = opção_3;
         this.opção_4 = opção_4;
-        this.resposta_certa = resposta_certa;
+        this.opção_correta = opção_correta;
+        this.titulo_pergunta = titulo_pergunta;
     }
 
     @Override
     public String toString() {
         return "Pergunta{" +
-                "titulo_pergunta='" + titulo_pergunta + '\'' +
+                "uuid='" + uuid + '\'' +
                 ", opção_1='" + opção_1 + '\'' +
                 ", opção_2='" + opção_2 + '\'' +
                 ", opção_3='" + opção_3 + '\'' +
                 ", opção_4='" + opção_4 + '\'' +
-                ", resposta_certa='" + resposta_certa + '\'' +
+                ", opção_correta='" + opção_correta + '\'' +
+                ", titulo_pergunta='" + titulo_pergunta + '\'' +
                 '}';
     }
+
+
+
+
+
+
+
 }
+
+
+
+

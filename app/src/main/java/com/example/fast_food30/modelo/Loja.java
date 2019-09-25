@@ -20,12 +20,12 @@ public class Loja extends AppCompatActivity {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.layout_list_view);
 
-        textViewTitulo = findViewById(R.id.text_view_titulo);
+        textViewTitulo = findViewById(R.id.text_view_nome);
         textViewDescricao = findViewById(R.id.text_view_descricao);
 
-        Intent intent =getIntent();
+        Intent intent = getIntent();
         String titulo = intent.getStringExtra("TITULO");
-        String descricao = intent.getStringExtra("DESCRIACAO");
+        String descricao = intent.getStringExtra("DESCRICAO");
 
         textViewTitulo.setText(titulo);
         textViewDescricao.setText(descricao);
