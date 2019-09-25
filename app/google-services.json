@@ -15,6 +15,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "895283283980-em26dpi7vi015qb0kv36ceehelu1l7dp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fast_food30",
+            "certificate_hash": "3c5665ec940863f254453288508d34489e5c70f3"
+          }
+        },
+        {
+          "client_id": "895283283980-dmqc2p6ksqs17etr3hug45ss8h22tjmf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fast_food30",
+            "certificate_hash": "1a31b0178753bb461691b636c91f61d33cc6b513"
+          }
+        },
+        {
+          "client_id": "895283283980-hg17c99vaforncno743rai2v1p1bkcd0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fast_food30",
+            "certificate_hash": "a847a506cb5d167754df225afceb8ee2a7d9590f"
+          }
+        },
+        {
           "client_id": "895283283980-a61on8mlbqvtvlqa8u9ifl6u99vr8pb5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
