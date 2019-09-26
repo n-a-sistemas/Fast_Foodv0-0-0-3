@@ -6,6 +6,10 @@ public class Cupom {
     private String descricao;
     private String uuid;
 
+    public Cupom(){
+
+    }
+
     public Cupom(String nome, String descricao, String uuid) {
 
         this.nome = nome;

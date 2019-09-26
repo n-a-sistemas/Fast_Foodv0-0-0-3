@@ -8,8 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MenuPrincipal" parent="">
-        <item name="android:windowBackground">@drawable/fundo</item>
+    <style name="Login" parent="FirebaseUI">
+        <item name="android:windowBackground">@drawable/login</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 

@@ -36,6 +36,7 @@ public class MeuAdapter extends ArrayAdapter<Cupom> {
 
         View listLoja = convertView;
 
+        //Inicializando o layout_list_view na ListView
         if(listLoja == null){
             listLoja = LayoutInflater.from(context)
                     .inflate(R.layout.layout_list_view, parent, false);

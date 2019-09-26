@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.fast_food30.adapter.MeuAdapter;
 import com.example.fast_food30.modelo.Cupom;
 import com.example.fast_food30.modelo.Loja;
+import com.example.fast_food30.modelo.TelaLogin;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        chamaLogin();
         conectarBanco();
         eventoBanco();
 
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         textViewPontos = findViewById(R.id.text_view_pontos);
         listView = findViewById(R.id.list_view);
 
+        salvarDadoCupom();
     }
 
     private void conectarBanco(){
@@ -66,15 +69,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void eventoBanco(){
-        databaseReference.child("cupom").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Cupom").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Cupom cupom = snapshot.getValue(Cupom.class);
                     cupons.add(cupom);
                 }
-
-                arrayAdapterLoja = new MeuAdapter( MainActivity.this, (ArrayList<Cupom>) cupons);
+                arrayAdapterLoja = new MeuAdapter(MainActivity.this, (
+                        ArrayList<Cupom>) cupons);
                 listView.setAdapter(arrayAdapterLoja);
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         compraCupom(cupons.get(i));
                         return;
-
                     }
                 });
             }
@@ -94,11 +97,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
     public void compraCupom(final Cupom cupom){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("FastFood Quiz");
+        builder.setTitle(R.string.app_name);
         builder.setMessage("Você deseja comprar esse cupom?");
         builder.setIcon(R.drawable.hamburguer1);
 
@@ -108,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
                     databaseReference.child("cupom")
                         .child(cupom.getUuid())
                         .setValue(cupom);
-                        salvarDado();
             }
         });
 
@@ -118,35 +118,27 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         AlertDialog alert = builder.create();
         alert.show();
-
     }
 
-    public void salvarDado(){
+    public void salvarDadoCupom(){
 
-        Cupom cupom = new Cupom("Cupom Combo",
-                "Necessário ter 100 pontos", "1");
-        databaseReference.child("cupom").child(cupom.getUuid()).setValue(cupom);
+        Cupom cupom = new Cupom("cupim", "teste", "123");
 
-        Cupom cupom1 = new Cupom("Cupom Refrigerante",
-                "Necessário ter 150 pontos", "2");
-        databaseReference.child("cupom").child(cupom1.getUuid()).setValue(cupom1);
-
-        Cupom cupom3 = new Cupom("Cupom Hamburguer",
-                "Necessário ter 200 pontos", "3");
-        databaseReference.child("cupom").child(cupom3.getUuid()).setValue(cupom3);
-
+        databaseReference.child("Cupom")
+                .child(cupom.getUuid())
+                .setValue(cupom);
     }
 
     public void jogarAgora(View view){
         Intent intent = new Intent(this, ActivityPerguntas.class);
         startActivity(intent);
-
     }
 
+    public void chamaLogin(){
+        Intent intent = new Intent(this, TelaLogin.class);
+        startActivity(intent);
 
-
-
+    }
 }
