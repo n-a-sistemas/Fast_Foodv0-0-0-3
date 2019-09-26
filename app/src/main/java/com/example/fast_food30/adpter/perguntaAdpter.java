@@ -48,27 +48,42 @@ public class perguntaAdpter extends ArrayAdapter<Pergunta> {
             listaItem = LayoutInflater.from(context).inflate(R.layout.layout_perguntas,parent,false );
         }
 
+
+
+
+
+
+
+
         Pergunta perguntaAtual = tarefas.get(position);
-        TextView opçao1= listaItem.findViewById(R.id.btn_opcao1);
-        opçao1.setText(perguntaAtual.getOpção_1());
+
+        perguntaAtual.embaralhar();
+
+        TextView opcao1= listaItem.findViewById(R.id.btn_opcao1);
 
 
-        TextView opçao2= listaItem.findViewById(R.id.btn_opcao2);
-        opçao2.setText(perguntaAtual.getOpção_2());
+
+        opcao1.setText(perguntaAtual.getRespostas().get(0));
 
 
-        TextView opçao3= listaItem.findViewById(R.id.btn_opcao3);
-        opçao3.setText(perguntaAtual.getOpção_3());
-
-        TextView opçao4= listaItem.findViewById(R.id.btn_opcao4);
-        opçao4.setText(perguntaAtual.getOpção_4());
+        TextView opcao2= listaItem.findViewById(R.id.btn_opcao2);
+        opcao2.setText(perguntaAtual.getRespostas().get(1));
 
 
-        TextView opçaocorreta= listaItem.findViewById(R.id.btn_opcao5);
-        opçaocorreta.setText(perguntaAtual.getOpção_correta());
+        TextView opcao3= listaItem.findViewById(R.id.btn_opcao3);
+        opcao3.setText(perguntaAtual.getRespostas().get(2));
+
+        TextView opcao4= listaItem.findViewById(R.id.btn_opcao4);
+        opcao4.setText(perguntaAtual.getRespostas().get(3));
+
+
+        TextView opcao5= listaItem.findViewById(R.id.btn_opcao5);
+        opcao5.setText(perguntaAtual.getRespostas().get(4));
 
         TextView tituloPergunta = listaItem.findViewById(R.id.text_titulo);
         tituloPergunta.setText(perguntaAtual.getTitulo_pergunta());
+
+
 
 
 
