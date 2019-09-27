@@ -14,6 +14,7 @@
         android:layout_marginTop="32dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +25,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="TextView"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_nome" />
 
@@ -32,11 +33,9 @@
         android:id="@+id/image_view_cupom"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_marginStart="90dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_view_nome"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/fastfood2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

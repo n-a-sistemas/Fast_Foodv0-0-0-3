@@ -10,7 +10,7 @@
 
     <style name="Login" parent="FirebaseUI">
         <item name="android:windowBackground">@drawable/login</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

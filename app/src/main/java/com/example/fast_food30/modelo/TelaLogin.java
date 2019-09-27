@@ -35,7 +35,8 @@ public class TelaLogin extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+    public void onCreate(@Nullable Bundle savedInstanceState,
+                         @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
 
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
@@ -48,6 +49,13 @@ public class TelaLogin extends AppCompatActivity {
         }
     }
 
+    public void conectarBancoUsuario(){
+
+        FirebaseApp.initializeApp(TelaLogin.this);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+    }
+
     private void criarLogin(){
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -56,12 +64,12 @@ public class TelaLogin extends AppCompatActivity {
 
         startActivityForResult(
                 AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .setLogo(R.drawable.user1)
-                .setIsSmartLockEnabled(false)
-                .setTheme(R.style.Login)
-                .build(), 123);
+                    .createSignInIntentBuilder()
+                    .setAvailableProviders(providers)
+                    .setLogo(R.drawable.user1)
+                    .setIsSmartLockEnabled(false)
+                    .setTheme(R.style.Login)
+                    .build(), 123);
     }
 
     @Override
@@ -73,14 +81,15 @@ public class TelaLogin extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK){
+
                 if (response.isNewUser()){
                     this.usuario.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     this.usuario.setEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     this.usuario.setValido(false);
 
-                    databaseReference.child("usuario")
-                            .child(usuario.getUid())
-                            .setValue(usuario);
+                        databaseReference.child("usuario")
+                                .child(usuario.getUid())
+                                .setValue(usuario);
                 }
 
                 sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
@@ -91,6 +100,7 @@ public class TelaLogin extends AppCompatActivity {
             else {
                 if(response == null){
                     finish();
+
                 }
             }
         }
@@ -117,12 +127,5 @@ public class TelaLogin extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void conectarBancoUsuario(){
-
-        FirebaseApp.initializeApp(TelaLogin.this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
     }
 }

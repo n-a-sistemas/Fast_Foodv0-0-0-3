@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Declarando objetos
     private TextView textViewVida;
-    private TextView textViewTempo;
     private TextView textViewPontos;
 
     //ListView
@@ -53,13 +52,13 @@ public class MainActivity extends AppCompatActivity {
         chamaLogin();
         conectarBanco();
         eventoBanco();
+        salvarDadoCupom();
+        //sessaoUsuario();
 
         textViewVida = findViewById(R.id.text_view_vida);
-        textViewTempo = findViewById(R.id.text_view_tempo);
+
         textViewPontos = findViewById(R.id.text_view_pontos);
         listView = findViewById(R.id.list_view);
-
-        salvarDadoCupom();
     }
 
     private void conectarBanco(){
@@ -97,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void chamaLogin(){
+        Intent intent = new Intent(MainActivity.this, TelaLogin.class);
+        startActivity(intent);
+
+    }
+
     public void compraCupom(final Cupom cupom){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.app_name);
@@ -106,9 +111,11 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                    databaseReference.child("cupom")
-                        .child(cupom.getUuid())
-                        .setValue(cupom);
+            //É necessário apagar o cupom e ele ir para a tela de cupom
+
+                databaseReference.child("Cupom")
+                            .child(cupons.get(i).getUuid())
+                            .removeValue();
             }
         });
 
@@ -124,21 +131,48 @@ public class MainActivity extends AppCompatActivity {
 
     public void salvarDadoCupom(){
 
-        Cupom cupom = new Cupom("cupim", "teste", "123");
+        Cupom cupom = new Cupom("cupom", "teste", "123");
 
-        databaseReference.child("Cupom")
-                .child(cupom.getUuid())
-                .setValue(cupom);
+            databaseReference.child("Cupom")
+                    .child(cupom.getUuid())
+                    .setValue(cupom);
+
+        Cupom cupom2 = new Cupom("Combo", "200 pontos", "001");
+
+            databaseReference.child("Cupom")
+                    .child(cupom2.getUuid())
+                    .setValue(cupom2);
+
+        Cupom cupom3 = new Cupom("Refri", "50 pontos", "002");
+
+            databaseReference.child("Cupom")
+                    .child(cupom3.getUuid())
+                    .setValue(cupom3);
+
+        Cupom cupom4 = new Cupom("Hamburguer", "150 pontos", "003");
+
+            databaseReference.child("Cupom")
+                    .child(cupom4.getUuid())
+                    .setValue(cupom4);
     }
+
 
     public void jogarAgora(View view){
         Intent intent = new Intent(this, ActivityPerguntas.class);
         startActivity(intent);
     }
 
-    public void chamaLogin(){
-        Intent intent = new Intent(this, TelaLogin.class);
-        startActivity(intent);
+    /*public void sessaoUsuario(){
+        int vida = 3;
+        String pontos;
 
-    }
+        for (int i = 0; i < 3; i++){
+
+            if (vida == 0){
+
+            }
+        }
+    }*/
+
+
 }
