@@ -66,17 +66,11 @@ public class ActivityPerguntas extends AppCompatActivity {
 
         //Botões
 
-        btn1 = findViewById(R.id.btn_opcao1);
-        btn2 = findViewById(R.id.btn_opcao2);
-        btn3 = findViewById(R.id.btn_opcao3);
-        btn4 = findViewById(R.id.btn_opcao4);
-        btn5 = findViewById(R.id.btn_opcao5);
 
 
 
 
         conectarBanco();
-
         leituraBanco();
     }
 
@@ -93,7 +87,7 @@ public class ActivityPerguntas extends AppCompatActivity {
 
 
         Random random = new Random();
-        int valor = random.nextInt(1) + 1;
+        int valor = random.nextInt(6) + 1;
 
 
         databaseReference.child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
@@ -143,13 +137,6 @@ public class ActivityPerguntas extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
             }
 
 
@@ -178,15 +165,18 @@ public class ActivityPerguntas extends AppCompatActivity {
 
         List<String> lista = new ArrayList<String>();
 
-        lista.add("Preto");
-        lista.add("Azul");
-        lista.add("Vermelho");
-        lista.add("Branco");
-        lista.add("Rosa");
+        lista.add("Kung-fu Jão");
+        lista.add("Tochiro");
+        lista.add("Kawasaki");
+        lista.add("Miagy");
+        lista.add("Lee");
 
-        Pergunta tarefa = new Pergunta("1","Branco","Cor do cavalo branco de napoleao?",lista);
+        Pergunta tarefa = new Pergunta("6","Kung-fu Jão","Qual o nome do chines da sala ? ",lista);
 
-        databaseReference.child("1").child(tarefa.getUuid()).setValue(tarefa);
+        databaseReference.child("6").child(tarefa.getUuid()).setValue(tarefa);
+
+
+
 
 
 
@@ -199,4 +189,12 @@ public class ActivityPerguntas extends AppCompatActivity {
 
 
 
-}
+
+
+
+
+
+
+
+
+        }

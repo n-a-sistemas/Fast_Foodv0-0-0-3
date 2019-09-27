@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        chamaLogin();
+//        chamaLogin();
         conectarBanco();
         eventoBanco();
 
@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Cupom cupom = snapshot.getValue(Cupom.class);
-                    cupons.add(cupom);
+//                    Cupom cupom = snapshot.getValue(Cupom.class);
+  //                  cupons.add(cupom);
                 }
                 arrayAdapterLoja = new MeuAdapter(MainActivity.this, (
                         ArrayList<Cupom>) cupons);
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void chamaLogin(){
         Intent intent = new Intent(this, TelaLogin.class);
-        startActivity(intent);
+//        startActivity(intent);
 
     }
 }
