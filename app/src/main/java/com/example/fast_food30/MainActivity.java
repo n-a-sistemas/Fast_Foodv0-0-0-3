@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Cupom cupom = snapshot.getValue(Cupom.class);
-                    cupons.add(cupom);
+//                    Cupom cupom = snapshot.getValue(Cupom.class);
+  //                  cupons.add(cupom);
                 }
                 arrayAdapterLoja = new MeuAdapter(MainActivity.this, (
                         ArrayList<Cupom>) cupons);
@@ -162,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //public void chamaLogin(){
+        //Intent intent = new Intent(this, TelaLogin.class);}
+//        startActivity(intent);
     /*public void sessaoUsuario(){
         int vida = 3;
         String pontos;
