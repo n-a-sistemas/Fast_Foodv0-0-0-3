@@ -1,22 +1,16 @@
-package com.example.fast_food30.modelo;
+package com.example.fast_food30;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.fast_food30.MainActivity;
-import com.example.fast_food30.R;
+import com.example.fast_food30.modelo.Usuario;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Arrays;
 import java.util.List;
 
-public class TelaLogin extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private Usuario usuario;
@@ -35,9 +29,9 @@ public class TelaLogin extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState,
-                         @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_layout_login);
 
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String resultado = sharedPreferences.getString("LOGIN", "");
@@ -46,14 +40,9 @@ public class TelaLogin extends AppCompatActivity {
 
         if (!Boolean.parseBoolean(resultado)){
             criarLogin();
+        }else{
+            finish();
         }
-    }
-
-    public void conectarBancoUsuario(){
-
-        FirebaseApp.initializeApp(TelaLogin.this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
     }
 
     private void criarLogin(){
@@ -64,19 +53,19 @@ public class TelaLogin extends AppCompatActivity {
 
         startActivityForResult(
                 AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setAvailableProviders(providers)
-                    .setLogo(R.drawable.user1)
-                    .setIsSmartLockEnabled(false)
-                    .setTheme(R.style.Login)
-                    .build(), 123);
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .setLogo(R.drawable.ic_user_clean)
+                        .setIsSmartLockEnabled(false)
+                        .setTheme(R.style.Login)
+                        .build(), 321);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 123){
+        if (requestCode == 321){
 
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
@@ -86,46 +75,33 @@ public class TelaLogin extends AppCompatActivity {
                     this.usuario.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     this.usuario.setEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     this.usuario.setValido(false);
-
-                        databaseReference.child("usuario")
-                                .child(usuario.getUid())
-                                .setValue(usuario);
+                    databaseReference
+                            .child("usuario")
+                            .child(usuario.getUid())
+                            .setValue(usuario);
                 }
 
                 sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("LOGIN", "true");
                 editor.apply();
+                finish();
             }
+
             else {
                 if(response == null){
                     finish();
-
                 }
             }
-        }
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_logout, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.menu_sair){
-            sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("LOGIN", "false");
-            editor.apply();
-            finish();
         }
 
-        return super.onOptionsItemSelected(item);
+    }
+
+    public void conectarBancoUsuario(){
+
+        FirebaseApp.initializeApp(LoginActivity.this);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
     }
 }

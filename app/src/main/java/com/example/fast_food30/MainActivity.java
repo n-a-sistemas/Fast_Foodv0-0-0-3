@@ -4,19 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.fast_food30.adapter.MeuAdapter;
 import com.example.fast_food30.modelo.Cupom;
-import com.example.fast_food30.modelo.Loja;
-import com.example.fast_food30.modelo.TelaLogin;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,13 +29,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
     //Declarando objetos
     private TextView textViewVida;
     private TextView textViewPontos;
+    private ImageView imageViewCupom;
 
     //ListView
     private ListView listView;
@@ -43,22 +46,30 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
 
+    //Shared Preferences
+    private SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        chamaLogin();
         conectarBanco();
         eventoBanco();
         salvarDadoCupom();
-        //sessaoUsuario();
+        chamaLogin();
 
         textViewVida = findViewById(R.id.text_view_vida);
-
+        imageViewCupom = findViewById(R.id.image_view_cupom);
         textViewPontos = findViewById(R.id.text_view_pontos);
         listView = findViewById(R.id.list_view);
+    }
+
+
+    public void chamaLogin(){
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void conectarBanco(){
@@ -73,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    Cupom cupom = snapshot.getValue(Cupom.class);
-  //                  cupons.add(cupom);
+                    Cupom cupom = snapshot.getValue(Cupom.class);
+                    cupons.add(cupom);
                 }
                 arrayAdapterLoja = new MeuAdapter(MainActivity.this, (
                         ArrayList<Cupom>) cupons);
@@ -96,17 +107,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void chamaLogin(){
-        Intent intent = new Intent(MainActivity.this, TelaLogin.class);
-        startActivity(intent);
-
-    }
-
     public void compraCupom(final Cupom cupom){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.app_name);
         builder.setMessage("Você deseja comprar esse cupom?");
-        builder.setIcon(R.drawable.hamburguer1);
+        builder.setIcon(R.drawable.hamburguer);
 
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
@@ -157,25 +162,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_logout, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.menu_sair){
+            sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("LOGIN", "false");
+            editor.apply();
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
     public void jogarAgora(View view){
         Intent intent = new Intent(this, ActivityPerguntas.class);
         startActivity(intent);
+
     }
 
-    //public void chamaLogin(){
-        //Intent intent = new Intent(this, TelaLogin.class);}
-//        startActivity(intent);
-    /*public void sessaoUsuario(){
-        int vida = 3;
-        String pontos;
+    //public void
 
-        for (int i = 0; i < 3; i++){
 
-            if (vida == 0){
-
-            }
-        }
-    }*/
 
 
 }
