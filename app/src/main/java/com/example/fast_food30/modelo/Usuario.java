@@ -4,12 +4,18 @@ public class Usuario {
     private String uid;
     private String email;
     private boolean valido;
+    private Integer vida;
+    private Integer pontos;
 
-    public Usuario(String uid, String email, boolean valido) {
+
+    public Usuario(String uid, String email, boolean valido, Integer vida, Integer pontos) {
         this.uid = uid;
         this.email = email;
         this.valido = valido;
+        this.vida = vida;
+        this.pontos = pontos;
     }
+
 
     public String getUid() {
         return uid;
@@ -35,4 +41,31 @@ public class Usuario {
         this.valido = valido;
     }
 
+    public Integer getVida() {
+        return vida;
+    }
+
+    public void setVida(Integer vida) {
+        this.vida = vida;
+    }
+
+    public Integer getPontos() {
+        return pontos;
+    }
+
+    public void setPontos(Integer pontos) {
+        this.pontos = pontos;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "uid='" + uid + '\'' +
+                ", email='" + email + '\'' +
+                ", valido=" + valido +
+                ", vida=" + vida +
+                ", pontos=" + pontos +
+                '}';
+    }
 }

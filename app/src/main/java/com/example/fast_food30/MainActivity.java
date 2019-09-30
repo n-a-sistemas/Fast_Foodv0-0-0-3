@@ -17,6 +17,7 @@ import com.example.fast_food30.adapter.MeuAdapter;
 import com.example.fast_food30.modelo.Cupom;
 import com.example.fast_food30.modelo.Loja;
 import com.example.fast_food30.modelo.TelaLogin;
+import com.example.fast_food30.modelo.Usuario;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         chamaLogin();
         conectarBanco();
         eventoBanco();
+        eventoBanco2();
         salvarDadoCupom();
         //sessaoUsuario();
 
@@ -59,7 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
         textViewPontos = findViewById(R.id.text_view_pontos);
         listView = findViewById(R.id.list_view);
-    }
+
+
+
+        }
 
     private void conectarBanco(){
         FirebaseApp.initializeApp(MainActivity.this);
@@ -73,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    Cupom cupom = snapshot.getValue(Cupom.class);
-  //                  cupons.add(cupom);
+                    Cupom cupom = snapshot.getValue(Cupom.class);
+                  cupons.add(cupom);
                 }
                 arrayAdapterLoja = new MeuAdapter(MainActivity.this, (
                         ArrayList<Cupom>) cupons);
@@ -94,7 +100,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+
     }
+    private void eventoBanco2(){
+
+        databaseReference.child("Usuario").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                textViewVida.setText(dataSnapshot.child("1").child("vida").getValue().toString());
+                textViewPontos.setText(dataSnapshot.child("1").child("pontos").getValue().toString());
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 
     public void chamaLogin(){
         Intent intent = new Intent(MainActivity.this, TelaLogin.class);
@@ -154,7 +183,12 @@ public class MainActivity extends AppCompatActivity {
             databaseReference.child("Cupom")
                     .child(cupom4.getUuid())
                     .setValue(cupom4);
+
+
+        Usuario usuario = new Usuario("1","Zoroah@Outlook.com",true,3,0);
+        databaseReference.child("Usuario").child(usuario.getUid()).setValue(usuario);
     }
+
 
 
     public void jogarAgora(View view){
