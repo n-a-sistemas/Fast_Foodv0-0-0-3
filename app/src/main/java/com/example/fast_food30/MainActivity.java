@@ -67,10 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void chamaLogin(){
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
-    }
+
 
     private void conectarBanco(){
         FirebaseApp.initializeApp(MainActivity.this);
@@ -105,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void chamaLogin(){
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+
     }
 
     public void compraCupom(final Cupom cupom){
@@ -189,12 +192,22 @@ public class MainActivity extends AppCompatActivity {
     public void jogarAgora(View view){
         Intent intent = new Intent(this, ActivityPerguntas.class);
         startActivity(intent);
-
     }
 
-    //public void
+    //public void chamaLogin(){
+        //Intent intent = new Intent(this, TelaLogin.class);}
+//        startActivity(intent);
+    /*public void sessaoUsuario(){
+        int vida = 3;
+        String pontos;
 
+        for (int i = 0; i < 3; i++){
 
+            if (vida == 0){
+
+            }
+        }
+    }*/
 
 
 }
