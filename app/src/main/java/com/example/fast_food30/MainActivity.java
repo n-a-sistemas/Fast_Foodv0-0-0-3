@@ -229,6 +229,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void meuscupons(View view){
+        Intent intent = new Intent(this, ActivityCupom.class);
+        startActivity(intent);
+    }
+
     //public void chamaLogin(){
         //Intent intent = new Intent(this, TelaLogin.class);}
 //        startActivity(intent);

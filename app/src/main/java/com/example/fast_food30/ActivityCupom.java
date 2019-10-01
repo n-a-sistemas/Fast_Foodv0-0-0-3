@@ -26,6 +26,16 @@ import java.util.List;
 public class ActivityCupom extends AppCompatActivity{
     private List<Cupom> list = new ArrayList();
     private ListView listView;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+
+    private void conectarBanco(){
+
+        FirebaseApp.initializeApp(ActivityCupom.this);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
