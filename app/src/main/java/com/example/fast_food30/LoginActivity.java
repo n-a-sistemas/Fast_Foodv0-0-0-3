@@ -22,7 +22,7 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
-    private Usuario usuario;
+    private Usuario usuario = new Usuario();
 
     //Banco
     private FirebaseDatabase firebaseDatabase;
@@ -35,6 +35,9 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String resultado = sharedPreferences.getString("LOGIN", "");
+
+
+        sharedPreferences = getSharedPreferences("ID" , Context.MODE_PRIVATE);
 
         conectarBancoUsuario();
 
@@ -74,6 +77,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isNewUser()){
                     this.usuario.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     this.usuario.setEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                    this.usuario.setVida(3);
+                    this.usuario.setPontos(0);
                     this.usuario.setValido(false);
                     databaseReference
                             .child("usuario")
@@ -84,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                 sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("LOGIN", "true");
+                editor.putString("ID",usuario.getUid());
                 editor.apply();
                 finish();
             }

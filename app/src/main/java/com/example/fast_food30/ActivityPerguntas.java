@@ -38,10 +38,12 @@ public class ActivityPerguntas extends AppCompatActivity {
     private  Button  btn4;
     private  Button  btn5;
     private TextView textViewTitulo;
+    private TextView textViewVida;
+    private TextView textViewPontos;
 
 
 
-    /*@Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perguntas);
@@ -51,161 +53,161 @@ public class ActivityPerguntas extends AppCompatActivity {
         btn4 = findViewById(R.id.btn_4);
         btn5 = findViewById(R.id.btn_5);
         textViewTitulo = findViewById(R.id.text_titulo);
+        textViewPontos = findViewById(R.id.text_view_pontos);
+        textViewVida = findViewById(R.id.text_view_vida);
         conectarBanco();
         leituraBanco();
-    }*/
-
-    private void  conectarBanco() {
-
-        FirebaseApp.initializeApp(ActivityPerguntas.this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
 
     }
+            private void conectarBanco(){
+
+            FirebaseApp.initializeApp(ActivityPerguntas.this);
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReference = firebaseDatabase.getReference();
+
+             }
 
 
-    public void leituraBanco(){
 
-        Random random = new Random();
-        int valor = random.nextInt(6) + 1;
-        if(!inteiros.contains(valor)){
-            inteiros.add(valor);
+             public void leituraBanco(){
 
-
-            databaseReference.child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
-
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    perguntas.clear();
-                    for (DataSnapshot snapshot: dataSnapshot.getChildren()){
-
-                        final Pergunta pergunta = snapshot.getValue(Pergunta.class);
-                        pergunta.embaralhar();
-
-                        perguntas.add(pergunta);
-                        btn1.setText(pergunta.getRespostas().get(0));
-                        btn2.setText(pergunta.getRespostas().get(1));
-                        btn3.setText(pergunta.getRespostas().get(2));
-                        btn4.setText(pergunta.getRespostas().get(3));
-                        btn5.setText(pergunta.getRespostas().get(4));
-                        textViewTitulo.setText(pergunta.getTitulo_pergunta());
-
-                        btn1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                                Button botao = (Button)view;
-                                String respostaBotao = botao.getText().toString();
-
-                                if( pergunta.getResposta_correta().equals(respostaBotao)){
-
-                                    leituraBanco();
-                                }
-                                else {
-                                    finish();
+            Random random = new Random();
+            int valor = random.nextInt(6) + 1;
+            if(!inteiros.contains(valor)) {
+                inteiros.add(valor);
 
 
-                                }
+                databaseReference.child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
 
-                            }
-                        });
-                        btn2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Button botao = (Button)view;
-                                String respostaBotao = botao.getText().toString();
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                if( pergunta.getResposta_correta().equals(respostaBotao)){
-                                    leituraBanco();
+                        perguntas.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
+                            final Pergunta pergunta = snapshot.getValue(Pergunta.class);
+                            pergunta.embaralhar();
+
+                            perguntas.add(pergunta);
+                            btn1.setText(pergunta.getRespostas().get(0));
+                            btn2.setText(pergunta.getRespostas().get(1));
+                            btn3.setText(pergunta.getRespostas().get(2));
+                            btn4.setText(pergunta.getRespostas().get(3));
+                            btn5.setText(pergunta.getRespostas().get(4));
+                            textViewTitulo.setText(pergunta.getTitulo_pergunta());
+
+                            btn1.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    Button botao = (Button) view;
+                                    String respostaBotao = botao.getText().toString();
+
+                                    if (pergunta.getResposta_correta().equals(respostaBotao)) {
+
+                                        leituraBanco();
+                                    } else {
+                                        finish();
+
+
+                                    }
 
                                 }
-                                else {
-                                    finish();
+                            });
+                            btn2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Button botao = (Button) view;
+                                    String respostaBotao = botao.getText().toString();
+
+                                    if (pergunta.getResposta_correta().equals(respostaBotao)) {
+                                        leituraBanco();
+
+
+                                    } else {
+                                        finish();
+
+                                    }
 
                                 }
+                            });
+                            btn3.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Button botao = (Button) view;
+                                    String respostaBotao = botao.getText().toString();
 
-                            }
-                        });
-                        btn3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Button botao = (Button)view;
-                                String respostaBotao = botao.getText().toString();
+                                    if (pergunta.getResposta_correta().equals(respostaBotao)) {
 
-                                if( pergunta.getResposta_correta().equals(respostaBotao)){
+                                        leituraBanco();
 
-                                    leituraBanco();
+                                    } else {
+                                        finish();
 
-                                }
-                                else {
-                                    finish();
-
-                                }
-
-                            }
-                        });
-                        btn4.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Button botao = (Button)view;
-                                String respostaBotao = botao.getText().toString();
-
-                                if( pergunta.getResposta_correta().equals(respostaBotao)){
-                                    leituraBanco();
-
+                                    }
 
                                 }
-                                else {
-                                    finish();
+                            });
+                            btn4.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Button botao = (Button) view;
+                                    String respostaBotao = botao.getText().toString();
+
+                                    if (pergunta.getResposta_correta().equals(respostaBotao)) {
+                                        leituraBanco();
+
+
+                                    } else {
+                                        finish();
+
+                                    }
 
                                 }
+                            });
+                            btn5.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Button botao = (Button) view;
+                                    String respostaBotao = botao.getText().toString();
 
-                            }
-                        });
-                        btn5.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Button botao = (Button)view;
-                                String respostaBotao = botao.getText().toString();
+                                    if (pergunta.getResposta_correta().equals(respostaBotao)) {
 
-                                if( pergunta.getResposta_correta().equals(respostaBotao)){
+                                        leituraBanco();
 
-                                    leituraBanco();
+                                    } else {
+                                        finish();
+
+                                    }
 
                                 }
-                                else {
-                                    finish();
+                            });
 
-                                }
 
-                            }
-                        });
+                        }
 
 
                     }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                    }
+                });
 
+            }
 
-
-
-
-
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-        }
         else {
             leituraBanco();
 
         }
     }
+
+
+
+
+
+
 
     public void salvarDado(){
         List<String> lista = new ArrayList<String>();

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.fast_food30.adapter.MeuAdapter;
 import com.example.fast_food30.modelo.Cupom;
+import com.example.fast_food30.modelo.Usuario;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         conectarBanco();
         eventoBanco();
+        leituraBanco2();
         salvarDadoCupom();
         chamaLogin();
 
@@ -103,6 +106,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void leituraBanco2() {
+
+        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                String ID = sharedPreferences.getString("ID","");
+
+
+
+
+
+
+
+
+                textViewPontos.setText(dataSnapshot.child(ID).child("pontos").getValue().toString());
+                textViewVida.setText(dataSnapshot.child(ID).child("vida").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+
 
     public void chamaLogin(){
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
