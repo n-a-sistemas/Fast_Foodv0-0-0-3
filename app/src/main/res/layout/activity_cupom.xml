@@ -7,149 +7,23 @@
     android:background="@drawable/fundo">
 
     <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="440dp"
-        android:layout_height="765dp"
+        android:id="@+id/imageView"
+        android:layout_width="637dp"
+        android:layout_height="717dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/camada1" />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="398dp"
-        android:layout_height="216dp"
-        android:layout_marginTop="45dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/retangulo4" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="398dp"
-        android:layout_height="216dp"
-        android:layout_marginTop="45dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_cupom1"
-        app:srcCompat="@drawable/retangulo4" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="398dp"
-        android:layout_height="216dp"
-        android:layout_marginTop="45dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_cupom2"
-        app:srcCompat="@drawable/retangulo4" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="398dp"
-        android:layout_height="216dp"
-        android:layout_marginTop="45dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_cupom3"
-        app:srcCompat="@drawable/retangulo4" />
-
-    <TextView
-        android:id="@+id/text_view_cupom1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
+    <ListView
+        android:id="@+id/list_view_cupom"
+        style="@android:style/Widget.ListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/text_view_cupom2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_cupom1" />
-
-    <TextView
-        android:id="@+id/text_view_cupom3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_cupom2" />
-
-    <TextView
-        android:id="@+id/text_view_cupom4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_cupom3" />
-
-    <ImageView
-        android:id="@+id/image_view_alimento1"
-        android:layout_width="wrap_content"
-        android:layout_height="116dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/text_view_cupom1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:srcCompat="@drawable/refri3" />
-
-    <ImageView
-        android:id="@+id/image_view_alimento2"
-        android:layout_width="wrap_content"
-        android:layout_height="116dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_cupom1"
-        app:srcCompat="@drawable/refri3" />
-
-    <ImageView
-        android:id="@+id/image_view_alimento3"
-        android:layout_width="wrap_content"
-        android:layout_height="116dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_cupom2"
-        app:srcCompat="@drawable/refri3" />
-
-    <ImageView
-        android:id="@+id/image_view_alimento4"
-        android:layout_width="wrap_content"
-        android:layout_height="116dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_cupom3"
-        app:srcCompat="@drawable/refri3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
