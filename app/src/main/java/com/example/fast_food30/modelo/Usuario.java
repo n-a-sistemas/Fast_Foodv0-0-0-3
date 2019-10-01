@@ -8,6 +8,12 @@ public class Usuario {
     private Integer pontos;
 
 
+
+    public Usuario(){
+
+    }
+
+
     public Usuario(String uid, String email, boolean valido, Integer vida, Integer pontos) {
         this.uid = uid;
         this.email = email;

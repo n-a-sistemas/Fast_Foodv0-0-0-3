@@ -26,7 +26,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toEndOf="@+id/text_view_vida"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/coracao" />
+        app:srcCompat="@drawable/coracao"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/text_view_vida"
