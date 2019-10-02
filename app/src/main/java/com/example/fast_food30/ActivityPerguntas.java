@@ -3,7 +3,9 @@ package com.example.fast_food30;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -40,6 +42,8 @@ public class ActivityPerguntas extends AppCompatActivity {
     private TextView textViewTitulo;
     private TextView textViewVida;
     private TextView textViewPontos;
+    private SharedPreferences sharedPreferences;
+
 
 
 
@@ -80,7 +84,7 @@ public class ActivityPerguntas extends AppCompatActivity {
                 databaseReference.child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
 
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
 
                         perguntas.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -96,6 +100,11 @@ public class ActivityPerguntas extends AppCompatActivity {
                             btn5.setText(pergunta.getRespostas().get(4));
                             textViewTitulo.setText(pergunta.getTitulo_pergunta());
 
+
+
+
+
+
                             btn1.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -105,7 +114,17 @@ public class ActivityPerguntas extends AppCompatActivity {
 
                                     if (pergunta.getResposta_correta().equals(respostaBotao)) {
 
+                                        sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                        String ID = sharedPreferences.getString("ID","");
+                                       
+
+
+
+
+
+
                                         leituraBanco();
+
                                     } else {
                                         finish();
 
@@ -121,7 +140,13 @@ public class ActivityPerguntas extends AppCompatActivity {
                                     String respostaBotao = botao.getText().toString();
 
                                     if (pergunta.getResposta_correta().equals(respostaBotao)) {
+
+                                        sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                        String ID = sharedPreferences.getString("ID","");
+                                       databaseReference.child(ID).child("pontos").setValue(50).toString();
                                         leituraBanco();
+
+
 
 
                                     } else {
@@ -139,7 +164,11 @@ public class ActivityPerguntas extends AppCompatActivity {
 
                                     if (pergunta.getResposta_correta().equals(respostaBotao)) {
 
+                                        sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                        String ID = sharedPreferences.getString("ID","");
+                                        databaseReference.child(ID).child("pontos").setValue(50).toString();
                                         leituraBanco();
+
 
                                     } else {
                                         finish();
@@ -155,7 +184,11 @@ public class ActivityPerguntas extends AppCompatActivity {
                                     String respostaBotao = botao.getText().toString();
 
                                     if (pergunta.getResposta_correta().equals(respostaBotao)) {
+                                        sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                        String ID = sharedPreferences.getString("ID","");
+                                        databaseReference.child(ID).child("pontos").setValue(50).toString();
                                         leituraBanco();
+
 
 
                                     } else {
@@ -173,7 +206,11 @@ public class ActivityPerguntas extends AppCompatActivity {
 
                                     if (pergunta.getResposta_correta().equals(respostaBotao)) {
 
+                                        sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                        String ID = sharedPreferences.getString("ID","");
+                                        databaseReference.child(ID).child("pontos").setValue(50).toString();
                                         leituraBanco();
+
 
                                     } else {
                                         finish();
