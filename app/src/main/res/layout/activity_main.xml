@@ -10,34 +10,32 @@
         android:id="@+id/text_view_pontos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="70dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
         android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_view_coracao"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/image_view_coracao"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="48dp"
+        android:contentDescription="TODO"
         app:layout_constraintStart_toEndOf="@+id/text_view_vida"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/coracao"
-        android:contentDescription="TODO" />
+        tools:layout_editor_absoluteY="32dp" />
 
     <TextView
         android:id="@+id/text_view_vida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 
     <Button
         android:id="@+id/btn_jogar_agora"
