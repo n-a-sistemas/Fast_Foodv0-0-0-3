@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         textViewVida = findViewById(R.id.text_view_vida);
         imageViewCupom = findViewById(R.id.image_view_cupom);
         textViewPontos = findViewById(R.id.text_view_pontos);
-        listView = findViewById(R.id.list_view);
+        listView = findViewById(R.id.list_view_cupom);
     }
 
 
@@ -229,6 +229,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void meuscupons(View view){
+        Intent intent = new Intent(this, ActivityCupom.class);
+        startActivity(intent);
+    }
 
     //public void chamaLogin(){
         //Intent intent = new Intent(this, TelaLogin.class);}

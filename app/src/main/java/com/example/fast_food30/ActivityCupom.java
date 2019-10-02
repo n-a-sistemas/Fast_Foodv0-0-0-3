@@ -1,51 +1,83 @@
 package com.example.fast_food30;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fast_food30.modelo.Cupom;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityCupom extends AppCompatActivity{
-
-    private TextView textViewCupom1;
-    private TextView textViewCupom2;
-    private TextView textViewCupom3;
-    private TextView textViewCupom4;
-
-    private ImageView imageViewAlimento1;
-    private ImageView imageViewAlimento2;
-    private ImageView imageViewAlimento3;
-    private ImageView imageViewAlimento4;
-
+    private List<Cupom> list = new ArrayList();
+    private ListView listView;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+
+    private void conectarBanco(){
+
+        FirebaseApp.initializeApp(ActivityCupom.this);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cupom);
-
-        textViewCupom1 = findViewById(R.id.text_view_cupom1);
-        textViewCupom2 = findViewById(R.id.text_view_cupom2);
-        textViewCupom3 = findViewById(R.id.text_view_cupom3);
-        textViewCupom4 = findViewById(R.id.text_view_cupom4);
-
-        imageViewAlimento1 = findViewById(R.id.image_view_alimento1);
-        imageViewAlimento2 = findViewById(R.id.image_view_alimento2);
-        imageViewAlimento3 = findViewById(R.id.image_view_alimento3);
-        imageViewAlimento4 = findViewById(R.id.image_view_alimento4);
-
-        conectarBanco();
+        carregarListView();
     }
 
-    private void conectarBanco(){
-        FirebaseApp.initializeApp(ActivityCupom.this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
+
+    public void carregarListView(){
+        listView = (ListView) findViewById(R.id.list_view_cupom);
+
+        final ArrayAdapter<Cupom> adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_checked, list);
+        adaptador.clear();
+        listView.setAdapter(adaptador);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("cupons");
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                list.add(dataSnapshot.getValue(Cupom.class));
+                adaptador.notifyDataSetChanged();
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                list.remove(dataSnapshot.getValue(Cupom.class));
+                adaptador.notifyDataSetChanged();
+            }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }
