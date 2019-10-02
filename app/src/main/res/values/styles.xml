@@ -9,8 +9,13 @@
     </style>
 
     <style name="Login" parent="FirebaseUI">
-        <item name="android:windowBackground">@drawable/logintheme</item>
+        <item name="android:windowBackground">@drawable/descansologin</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="no_title" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
 </resources>

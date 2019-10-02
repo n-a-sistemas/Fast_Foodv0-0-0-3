@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     //Shared Preferences
     private SharedPreferences sharedPreferences;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +67,6 @@ public class MainActivity extends AppCompatActivity {
         textViewPontos = findViewById(R.id.text_view_pontos);
         listView = findViewById(R.id.list_view_cupom);
     }
-
-
-
 
     private void conectarBanco(){
         FirebaseApp.initializeApp(MainActivity.this);
@@ -112,18 +108,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
-
-
                 sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
                 String ID = sharedPreferences.getString("ID","");
 
+                if (ID == "" || ID == null){
 
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+                else {
 
-
-
-
-
+                }
 
                 textViewPontos.setText(dataSnapshot.child(ID).child("pontos").getValue().toString());
                 textViewVida.setText(dataSnapshot.child(ID).child("vida").getValue().toString());
@@ -136,11 +131,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
-
     public void chamaLogin(){
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
 
     }
@@ -199,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
                     .setValue(cupom4);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_logout, menu);
@@ -223,7 +214,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void jogarAgora(View view){
         Intent intent = new Intent(this, ActivityPerguntas.class);
         startActivity(intent);
@@ -233,21 +223,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ActivityCupom.class);
         startActivity(intent);
     }
-
-    //public void chamaLogin(){
-        //Intent intent = new Intent(this, TelaLogin.class);}
-//        startActivity(intent);
-    /*public void sessaoUsuario(){
-        int vida = 3;
-        String pontos;
-
-        for (int i = 0; i < 3; i++){
-
-            if (vida == 0){
-
-            }
-        }
-    }*/
-
-
 }
