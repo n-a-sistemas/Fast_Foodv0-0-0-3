@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
                 ID = cupom.getUuid();
                 pontoAtual =- cupomPreco;
-                databaseReference.child("Cupom").child(ID).child("preco").setValue(pontoAtual);
+                //databaseReference.child("Cupom").child(ID).child("preco").setValue(pontoAtual);
             }
         });
 
