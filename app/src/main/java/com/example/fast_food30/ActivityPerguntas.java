@@ -3,7 +3,9 @@ package com.example.fast_food30;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -40,6 +42,10 @@ public class ActivityPerguntas extends AppCompatActivity {
     private TextView textViewTitulo;
     private TextView textViewVida;
     private TextView textViewPontos;
+    private SharedPreferences sharedPreferences;
+    Integer pontoganho = 50;
+    Integer pontoAtual;
+
 
 
 
@@ -80,7 +86,7 @@ public class ActivityPerguntas extends AppCompatActivity {
                 databaseReference.child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
 
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
 
                         perguntas.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -96,6 +102,11 @@ public class ActivityPerguntas extends AppCompatActivity {
                             btn5.setText(pergunta.getRespostas().get(4));
                             textViewTitulo.setText(pergunta.getTitulo_pergunta());
 
+
+
+
+
+
                             btn1.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -105,7 +116,40 @@ public class ActivityPerguntas extends AppCompatActivity {
 
                                     if (pergunta.getResposta_correta().equals(respostaBotao)) {
 
+
+                                        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+
+                                                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                                String ID = sharedPreferences.getString("ID","");
+
+                                                pontoAtual =  Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
+                                                pontoAtual += pontoganho;
+                                                databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
+
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+
+
+
+
+
                                         leituraBanco();
+
                                     } else {
                                         finish();
 
@@ -121,7 +165,38 @@ public class ActivityPerguntas extends AppCompatActivity {
                                     String respostaBotao = botao.getText().toString();
 
                                     if (pergunta.getResposta_correta().equals(respostaBotao)) {
+
+
+                                        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+
+                                                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                                String ID = sharedPreferences.getString("ID","");
+
+                                                pontoAtual =  Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
+
+
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                        sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                        String ID = sharedPreferences.getString("ID","");
+                                        pontoAtual += pontoganho;
+                                        databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
                                         leituraBanco();
+
+
 
 
                                     } else {
@@ -137,9 +212,48 @@ public class ActivityPerguntas extends AppCompatActivity {
                                     Button botao = (Button) view;
                                     String respostaBotao = botao.getText().toString();
 
+
+
+
                                     if (pergunta.getResposta_correta().equals(respostaBotao)) {
 
+
+                                        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+
+                                                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                                String ID = sharedPreferences.getString("ID","");
+
+                                                pontoAtual =  Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
+                                                pontoAtual += pontoganho;
+                                                databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
+
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+
+
+
+
+
+
+
+
                                         leituraBanco();
+
 
                                     } else {
                                         finish();
@@ -155,7 +269,36 @@ public class ActivityPerguntas extends AppCompatActivity {
                                     String respostaBotao = botao.getText().toString();
 
                                     if (pergunta.getResposta_correta().equals(respostaBotao)) {
+                                        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+
+                                                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                                String ID = sharedPreferences.getString("ID","");
+
+                                                pontoAtual =  Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
+                                                pontoAtual += pontoganho;
+                                                databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
+
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+
+
                                         leituraBanco();
+
 
 
                                     } else {
@@ -173,9 +316,43 @@ public class ActivityPerguntas extends AppCompatActivity {
 
                                     if (pergunta.getResposta_correta().equals(respostaBotao)) {
 
+                                        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+
+                                                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                                String ID = sharedPreferences.getString("ID","");
+
+                                                pontoAtual =  Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
+                                                pontoAtual += pontoganho;
+                                                databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
+
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+
+
+
+
                                         leituraBanco();
 
+
                                     } else {
+
+
+
                                         finish();
 
                                     }
@@ -201,6 +378,7 @@ public class ActivityPerguntas extends AppCompatActivity {
             leituraBanco();
 
         }
+
     }
 
 
