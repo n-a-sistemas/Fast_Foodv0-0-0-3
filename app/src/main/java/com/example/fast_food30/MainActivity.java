@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void meuscupons(View view){
+    public void meusCupons(View view){
         Intent intent = new Intent(this, ActivityCupom.class);
         startActivity(intent);
     }

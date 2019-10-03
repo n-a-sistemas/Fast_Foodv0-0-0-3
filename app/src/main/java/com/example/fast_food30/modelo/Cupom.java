@@ -5,6 +5,7 @@ public class Cupom {
     private String nome;
     private String descricao;
     private String uuid;
+    private String cupom;
 
     public Cupom(){
 
@@ -15,6 +16,7 @@ public class Cupom {
         this.nome = nome;
         this.descricao = descricao;
         this.uuid = uuid;
+        this.cupom = cupom;
     }
 
     public String getUuid() {
@@ -40,4 +42,13 @@ public class Cupom {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-}
+
+    public String getCupom() {
+        return cupom;
+    }
+
+    public void setCupom(String cupom) {
+        this.cupom = cupom;
+    }
+
+    }
