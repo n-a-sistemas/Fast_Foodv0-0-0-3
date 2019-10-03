@@ -113,15 +113,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if (ID == "" || ID == null){
 
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    chamaLogin();
                 }
                 else {
 
                 }
 
-                textViewPontos.setText(dataSnapshot.child(ID).child("pontos").getValue().toString());
-                textViewVida.setText(dataSnapshot.child(ID).child("vida").getValue().toString());
+                //textViewPontos.setText(dataSnapshot.child(ID).child("pontos").getValue().toString());
+                //textViewVida.setText(dataSnapshot.child(ID).child("vida").getValue().toString());
             }
 
             @Override

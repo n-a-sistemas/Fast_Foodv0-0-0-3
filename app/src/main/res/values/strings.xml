@@ -3,4 +3,6 @@
     <string name="btn_jogar">JOGAR AGORA</string>
     <string name="btn_cupons">MEUS CUPONS</string>
     <string name="sair">Log out</string>
+    <string name="teste_cor">100</string>
+    <string name="teste_cor_pontos">8000</string>
 </resources>
