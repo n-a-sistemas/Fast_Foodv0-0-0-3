@@ -6,6 +6,7 @@ public class Cupom {
     private String preco;
     private String uuid;
 
+
     public Cupom(){
 
     }

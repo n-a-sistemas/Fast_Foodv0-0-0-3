@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     //ListView
     private ListView listView;
     private List<Cupom> cupons = new ArrayList<>();
+    private List<Cupom> cuponsComprados = new ArrayList<>();
+
     private ArrayAdapter<Cupom> arrayAdapterLoja;
 
     //Banco
@@ -59,21 +62,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        conectarBanco();
-        leituraBanco2();
-        cupomPesquisaCompra();
-        consultaPontos();
-        consultaVida();
-        consultaCupom();
-
-        //salvarDadoCupom();
-        chamaLogin();
-
         textViewVida = findViewById(R.id.text_view_vida);
         imageViewCupom = findViewById(R.id.image_view_cupom);
         textViewPontos = findViewById(R.id.text_view_pontos);
         listView = findViewById(R.id.list_view_cupom);
+
+        sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+        String resultado = sharedPreferences.getString("LOGIN", "");
+
+        conectarBanco();
+        leituraBanco2();
+        cupomPesquisaCompra();
+        salvarDadoCupom();
+        consultaPontos();
+        consultaVida();
+        chamaLogin();
+
+
+        if(resultado == "true") {
+
+            conectarBanco();
+            chamaLogin();
+
+        }
+
+
     }
 
 
@@ -105,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
                         compraCupom(cupons.get(i));
                         return ;
+
                     }
                 });
             }
@@ -128,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 String ID = sharedPreferences.getString("ID","");
 
 
-                textViewVida.setText(dataSnapshot.child(ID).child("vida").getValue().toString());
-                textViewPontos.setText(dataSnapshot.child(ID).child("pontos").getValue().toString());
+             textViewVida.setText(dataSnapshot.child(ID).child("vida").getValue().toString());
+              textViewPontos.setText(dataSnapshot.child(ID).child("pontos").getValue().toString());
             }
 
             @Override
@@ -151,15 +165,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void compraCupom(final Cupom cupom){
 
+        ID = cupom.getUuid();
+        consultaCupom();
 
-
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.app_name);
         builder.setMessage("Você deseja comprar esse cupom?");
         builder.setIcon(R.drawable.hamburguer);
-
 
 
 
@@ -170,10 +182,28 @@ public class MainActivity extends AppCompatActivity {
             //É necessário apagar o cupom e ele ir para a tela de cupom
 
 
-                ID = cupom.getUuid();
-                pontoAtual =- cupomPreco;
-                //databaseReference.child("Cupom").child(ID).child("preco").setValue(pontoAtual);
+                if(pontoAtual >= cupomPreco) {
+
+
+                    pontoAtual -= cupomPreco;
+                    sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+                    String ID = sharedPreferences.getString("ID", "");
+                    databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
+
+
+                    cuponsComprados.add(new Cupom(cupom.getNome(),cupom.getPreco(),UUID.randomUUID().toString()));
+
+                    databaseReference.child("usuario").child(ID).child("cupons").setValue(cuponsComprados);
+                }
+
+                else {
+
+
+                }
+
+
             }
+
         });
 
         builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -186,29 +216,23 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public void salvarDadoCupom(){
+    public void salvarDadoCupom() {
+
+
+      Cupom cupom1 = new Cupom("Refri","50","1");
+      databaseReference.child("Cupom").child(cupom1.getUuid()).setValue(cupom1);
+
+        Cupom cupom2 = new Cupom("Hamburguer","150","2");
+        databaseReference.child("Cupom").child(cupom2.getUuid()).setValue(cupom2);
 
 
 
-        Cupom cupom2 = new Cupom("Combo", "200", "1A");
+        Cupom cupom3 = new Cupom("Combo","300","3");
+        databaseReference.child("Cupom").child(cupom3.getUuid()).setValue(cupom3);
 
-            databaseReference.child("Cupom")
-                    .child(cupom2.getUuid())
-                    .setValue(cupom2);
 
-        Cupom cupom3 = new Cupom("Refri", "50" , "2A");
 
-            databaseReference.child("Cupom")
-                    .child(cupom3.getUuid())
-                    .setValue(cupom3);
-
-        Cupom cupom4 = new Cupom("Hamburguer", "150 ", "3A");
-
-            databaseReference.child("Cupom")
-                    .child(cupom4.getUuid())
-                    .setValue(cupom4);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -263,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void meuscupons(View view){
         Intent intent = new Intent(this, ActivityCupom.class);
+
         startActivity(intent);
     }
 
@@ -302,13 +327,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void consultaCupom(){
+    public void consultaCupom( ){
 
         databaseReference.child("Cupom").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-               cupomPreco = Integer.parseInt(dataSnapshot.child("1A").child("preco").getValue().toString());
+
+                cupomPreco = Integer.parseInt(dataSnapshot.child(ID).child("preco").getValue().toString());
             }
 
             @Override

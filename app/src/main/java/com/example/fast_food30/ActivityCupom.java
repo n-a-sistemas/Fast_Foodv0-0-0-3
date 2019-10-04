@@ -1,5 +1,7 @@
 package com.example.fast_food30;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -7,6 +9,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fast_food30.adapter.CupomAdapter;
 import com.example.fast_food30.adapter.MeuAdapter;
 import com.example.fast_food30.modelo.Cupom;
 import com.google.firebase.FirebaseApp;
@@ -24,7 +27,7 @@ public class ActivityCupom extends AppCompatActivity{
     private ListView listView;
     private List<Cupom> cupons = new ArrayList<>();
     private ArrayAdapter<Cupom> cupomArrayAdapter;
-
+    private SharedPreferences sharedPreferences;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
 
@@ -46,7 +49,12 @@ public class ActivityCupom extends AppCompatActivity{
     }
 
     private void eventoBanco() {
-        databaseReference.child("Cupom").addValueEventListener(new ValueEventListener() {
+
+
+
+        sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+        String ID = sharedPreferences.getString("ID", "");
+        databaseReference.child("usuario").child(ID).child("cupons").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -54,9 +62,15 @@ public class ActivityCupom extends AppCompatActivity{
                     Cupom cupom = snapshot.getValue(Cupom.class);
                     cupons.add(cupom);
                 }
-                cupomArrayAdapter = new MeuAdapter(ActivityCupom.this, (
-                        ArrayList<Cupom>) cupons);
+
+
+                cupomArrayAdapter = new CupomAdapter(ActivityCupom.this,
+                        (ArrayList<Cupom>) cupons);
+
+
                 listView.setAdapter(cupomArrayAdapter);
+
+                return;
             }
 
             @Override
@@ -64,4 +78,7 @@ public class ActivityCupom extends AppCompatActivity{
             }
         });
     }
+
+
+
 }

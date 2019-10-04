@@ -19,30 +19,38 @@ import java.util.List;
 
 public class CupomAdapter extends ArrayAdapter<Cupom> {
 
+
     private Context context;
-    private List<Cupom> cupons;
+    private List<Cupom> tarefas;
 
-    private TextView cupom;
+    public CupomAdapter(Context context, ArrayList<Cupom> tarefas){
 
-    public CupomAdapter(Context context, ArrayList<Cupom> list){
-        super(context, 0, list);
+        super(context,0,tarefas);
+
         this.context = context;
-        cupons = list;
+        this.tarefas = tarefas;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        View listCupom = convertView;
 
-        if(listCupom == null){
-            listCupom = LayoutInflater.from(context)
-                    .inflate(R.layout.activity_cupom, parent, false);
+        View listaItem = convertView;
+
+        //Inicializando o layout_list na ListView
+        if (listaItem == null){
+            listaItem = LayoutInflater.from(context).inflate(R.layout.layout_compracupom,parent,false);
         }
 
-        ListView lista = listCupom.findViewById(R.id.list_view_cupom);
+        Cupom CupomAtual = tarefas.get(position);
 
-        return listCupom;
+        TextView nomeTarefa = listaItem.findViewById(R.id.text_id);
+        nomeTarefa.setText(CupomAtual.getUuid());
+
+        TextView statusTarefa = listaItem.findViewById(R.id.text_nome);
+        statusTarefa.setText(CupomAtual.getNome());
+
+        return listaItem;
     }
 }
