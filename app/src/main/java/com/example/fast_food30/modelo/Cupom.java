@@ -3,27 +3,17 @@ package com.example.fast_food30.modelo;
 public class Cupom {
 
     private String nome;
-    private String descricao;
+    private String preco;
     private String uuid;
-    private String cupom;
+
 
     public Cupom(){
 
     }
 
-    public Cupom(String nome, String descricao, String uuid) {
-
+    public Cupom(String nome, String preco, String uuid) {
         this.nome = nome;
-        this.descricao = descricao;
-        this.uuid = uuid;
-        this.cupom = cupom;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
+        this.preco = preco;
         this.uuid = uuid;
     }
 
@@ -35,20 +25,28 @@ public class Cupom {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getPreco() {
+        return preco;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setPreco(String preco) {
+        this.preco = preco;
     }
 
-    public String getCupom() {
-        return cupom;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setCupom(String cupom) {
-        this.cupom = cupom;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
+    @Override
+    public String toString() {
+        return "Cupom{" +
+                "nome='" + nome + '\'' +
+                ", preco='" + preco + '\'' +
+                ", uuid='" + uuid + '\'' +
+                '}';
     }
+}

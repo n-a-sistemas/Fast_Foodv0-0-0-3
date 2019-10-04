@@ -48,7 +48,7 @@ public class MeuAdapter extends ArrayAdapter<Cupom> {
         nome.setText(itemLoja.getNome());
 
         TextView descricao = listLoja.findViewById(R.id.text_view_descricao);
-        descricao.setText(itemLoja.getDescricao());
+        descricao.setText(itemLoja.getPreco() + " Pontos");
 
         return listLoja;
     }

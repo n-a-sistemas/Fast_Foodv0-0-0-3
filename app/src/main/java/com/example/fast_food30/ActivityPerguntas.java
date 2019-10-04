@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -43,8 +44,11 @@ public class ActivityPerguntas extends AppCompatActivity {
     private TextView textViewVida;
     private TextView textViewPontos;
     private SharedPreferences sharedPreferences;
-    Integer pontoganho = 50;
+    Integer pontoganho = 15;
     Integer pontoAtual;
+    Integer vidaAtual;
+    Integer vidaPerdida = -1;
+    private List<Button> botoes = new ArrayList<Button>();
 
 
 
@@ -102,287 +106,97 @@ public class ActivityPerguntas extends AppCompatActivity {
                             btn5.setText(pergunta.getRespostas().get(4));
                             textViewTitulo.setText(pergunta.getTitulo_pergunta());
 
+                            botoes.add(btn1);
+                            botoes.add(btn2);
+                            botoes.add(btn3);
+                            botoes.add(btn4);
+                            botoes.add(btn5);
+                            consultaPontos();
+                            consultaVida();
+                            for (int i = 0; i < 5; i++) {
 
 
+                                botoes.get(i).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        Button botao = (Button) view;
+                                        String respostaBotao = botao.getText().toString();
 
 
+                                        if (pergunta.getResposta_correta().equals(respostaBotao)) {
 
-                            btn1.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
+                                            sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                            String ID = sharedPreferences.getString("ID","");
+                                            pontoAtual += pontoganho;
+                                            databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
+                                            leituraBanco();
+                                        }
+                                        else {
 
-                                    Button botao = (Button) view;
-                                    String respostaBotao = botao.getText().toString();
-
-                                    if (pergunta.getResposta_correta().equals(respostaBotao)) {
-
-
-                                        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-
-
-
-                                                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
-                                                String ID = sharedPreferences.getString("ID","");
-
-                                                pontoAtual =  Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
-                                                pontoAtual += pontoganho;
-                                                databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
-
-
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-
-
-
-
-
-
-
-                                        leituraBanco();
-
-                                    } else {
-                                        finish();
-
-
+                                            sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                            String ID = sharedPreferences.getString("ID","");
+                                            vidaAtual += vidaPerdida;
+                                            databaseReference.child("usuario").child(ID).child("vida").setValue(vidaAtual);
+                                            finish();
+                                        }
                                     }
+                                });
 
-                                }
-                            });
-                            btn2.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Button botao = (Button) view;
-                                    String respostaBotao = botao.getText().toString();
 
-                                    if (pergunta.getResposta_correta().equals(respostaBotao)) {
+                             }
 
 
-                                        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-
-
-
-                                                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
-                                                String ID = sharedPreferences.getString("ID","");
-
-                                                pontoAtual =  Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
-
-
-
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-                                        sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
-                                        String ID = sharedPreferences.getString("ID","");
-                                        pontoAtual += pontoganho;
-                                        databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
-                                        leituraBanco();
-
-
-
-
-                                    } else {
-                                        finish();
-
-                                    }
-
-                                }
-                            });
-                            btn3.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Button botao = (Button) view;
-                                    String respostaBotao = botao.getText().toString();
-
-
-
-
-                                    if (pergunta.getResposta_correta().equals(respostaBotao)) {
-
-
-                                        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-
-
-
-                                                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
-                                                String ID = sharedPreferences.getString("ID","");
-
-                                                pontoAtual =  Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
-                                                pontoAtual += pontoganho;
-                                                databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
-
-
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-
-
-
-
-
-
-
-
-
-
-                                        leituraBanco();
-
-
-                                    } else {
-                                        finish();
-
-                                    }
-
-                                }
-                            });
-                            btn4.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Button botao = (Button) view;
-                                    String respostaBotao = botao.getText().toString();
-
-                                    if (pergunta.getResposta_correta().equals(respostaBotao)) {
-                                        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-
-
-
-                                                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
-                                                String ID = sharedPreferences.getString("ID","");
-
-                                                pontoAtual =  Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
-                                                pontoAtual += pontoganho;
-                                                databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
-
-
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-
-
-
-
-                                        leituraBanco();
-
-
-
-                                    } else {
-                                        finish();
-
-                                    }
-
-                                }
-                            });
-                            btn5.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Button botao = (Button) view;
-                                    String respostaBotao = botao.getText().toString();
-
-                                    if (pergunta.getResposta_correta().equals(respostaBotao)) {
-
-                                        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-
-
-
-                                                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
-                                                String ID = sharedPreferences.getString("ID","");
-
-                                                pontoAtual =  Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
-                                                pontoAtual += pontoganho;
-                                                databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
-
-
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-
-
-
-
-
-
-                                        leituraBanco();
-
-
-                                    } else {
-
-
-
-                                        finish();
-
-                                    }
-
-                                }
-                            });
 
 
                         }
-
-
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
                     }
                 });
+            }
+        else {
+            leituraBanco();
+        }
+    }
+
+    public void consultaVida() {
+        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+                String ID = sharedPreferences.getString("ID", "");
+                vidaAtual = Integer.parseInt(dataSnapshot.child(ID).child("vida").getValue().toString());
 
             }
 
-        else {
-            leituraBanco();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        }
+            }
+        });
 
     }
 
+    public void consultaPontos(){
+        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                String ID = sharedPreferences.getString("ID","");
+                pontoAtual = Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
 
