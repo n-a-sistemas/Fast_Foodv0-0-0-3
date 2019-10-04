@@ -1,13 +1,13 @@
 package com.example.fast_food30;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.fast_food30.adapter.MeuAdapter;
+import com.example.fast_food30.adapter.CupomAdapter;
 import com.example.fast_food30.modelo.Cupom;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -19,14 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityCupom extends AppCompatActivity{
-
-    private ListView listView;
-    private List<Cupom> cupons = new ArrayList<>();
-    private ArrayAdapter<Cupom> cupomArrayAdapter;
-
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
+public class ActivityCupom extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +31,14 @@ public class ActivityCupom extends AppCompatActivity{
 
         listView = findViewById(R.id.list_view_cupom);
     }
+
+    private ListView listView;
+    private List<Cupom> cupons = new ArrayList<>();
+    private ArrayAdapter<Cupom> cupomArrayAdapter;
+
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+
 
     private void conectarBanco(){
         FirebaseApp.initializeApp(ActivityCupom.this);
@@ -54,7 +55,7 @@ public class ActivityCupom extends AppCompatActivity{
                     Cupom cupom = snapshot.getValue(Cupom.class);
                     cupons.add(cupom);
                 }
-                cupomArrayAdapter = new MeuAdapter(ActivityCupom.this, (
+                cupomArrayAdapter = new CupomAdapter(ActivityCupom.this, (
                         ArrayList<Cupom>) cupons);
                 listView.setAdapter(cupomArrayAdapter);
             }
@@ -65,3 +66,4 @@ public class ActivityCupom extends AppCompatActivity{
         });
     }
 }
+

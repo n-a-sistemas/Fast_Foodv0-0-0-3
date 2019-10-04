@@ -151,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
                 databaseReference.child("Cupom")
                             .child(cupons.get(i).getUuid())
                             .removeValue();
+
+
             }
         });
 
