@@ -13,17 +13,17 @@ import androidx.annotation.Nullable;
 
 import com.example.fast_food30.R;
 import com.example.fast_food30.modelo.Cupom;
+import com.example.fast_food30.modelo.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CupomAdapter extends ArrayAdapter<Cupom> {
-
+public class CupomAdapter extends ArrayAdapter<Usuario> {
 
     private Context context;
-    private List<Cupom> tarefas;
+    private List<Usuario> tarefas;
 
-    public CupomAdapter(Context context, ArrayList<Cupom> tarefas){
+    public CupomAdapter(Context context, ArrayList<Usuario> tarefas){
 
         super(context,0,tarefas);
 
@@ -43,13 +43,13 @@ public class CupomAdapter extends ArrayAdapter<Cupom> {
             listaItem = LayoutInflater.from(context).inflate(R.layout.layout_compracupom,parent,false);
         }
 
-        Cupom CupomAtual = tarefas.get(position);
+        Usuario tarefaAtual = tarefas.get(position);
 
-        TextView nomeTarefa = listaItem.findViewById(R.id.text_id);
-        nomeTarefa.setText(CupomAtual.getUuid());
+        TextView nomeTarefa = listaItem.findViewById(R.id.text_nome);
+        nomeTarefa.setText(tarefaAtual.getCupons().get(1).toString());
 
-        TextView statusTarefa = listaItem.findViewById(R.id.text_nome);
-        statusTarefa.setText(CupomAtual.getNome());
+
+
 
         return listaItem;
     }

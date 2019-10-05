@@ -66,25 +66,24 @@ public class MainActivity extends AppCompatActivity {
         imageViewCupom = findViewById(R.id.image_view_cupom);
         textViewPontos = findViewById(R.id.text_view_pontos);
         listView = findViewById(R.id.list_view_cupom);
-
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String resultado = sharedPreferences.getString("LOGIN", "");
 
-        conectarBanco();
-        leituraBanco2();
-        cupomPesquisaCompra();
-        salvarDadoCupom();
-        consultaPontos();
-        consultaVida();
-        chamaLogin();
+
+                conectarBanco();
+                chamaLogin();
 
 
-        if(resultado == "true") {
 
-            conectarBanco();
-            chamaLogin();
 
-        }
+
+
+
+
+
+
+
+
 
 
     }
@@ -160,6 +159,11 @@ public class MainActivity extends AppCompatActivity {
     public void chamaLogin(){
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
+        leituraBanco2();
+        consultaPontos();
+        consultaVida();
+        cupomPesquisaCompra();
+        salvarDadoCupom();
 
     }
 
@@ -286,9 +290,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void meuscupons(View view){
-        Intent intent = new Intent(this, CupomActivity.class);
+       Intent intent = new Intent(this, CupomAcitivity.class);
 
-        startActivity(intent);
+       startActivity(intent);
     }
 
 
