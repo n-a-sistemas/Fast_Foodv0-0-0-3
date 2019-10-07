@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,22 +13,21 @@ import androidx.annotation.Nullable;
 
 import com.example.fast_food30.R;
 import com.example.fast_food30.modelo.Cupom;
-import com.example.fast_food30.modelo.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CupomAdapter extends ArrayAdapter<Usuario> {
+public class CupomAdapter extends ArrayAdapter<Cupom> {
 
     private Context context;
-    private List<Usuario> tarefas;
+    private List<Cupom> cupons;
 
-    public CupomAdapter(Context context, ArrayList<Usuario> tarefas){
+    public CupomAdapter(Context context, ArrayList<Cupom> cupons){
 
-        super(context,0,tarefas);
+        super(context,0,cupons);
 
         this.context = context;
-        this.tarefas = tarefas;
+        this.cupons = cupons;
     }
 
     @NonNull
@@ -43,10 +42,26 @@ public class CupomAdapter extends ArrayAdapter<Usuario> {
             listaItem = LayoutInflater.from(context).inflate(R.layout.layout_compracupom,parent,false);
         }
 
-        Usuario tarefaAtual = tarefas.get(position);
+        Cupom cupomAtual = cupons.get(position);
 
-        TextView nomeTarefa = listaItem.findViewById(R.id.text_nome);
-        nomeTarefa.setText(tarefaAtual.getCupons().get(1).toString());
+
+
+        TextView ID = listaItem.findViewById(R.id.text_id);
+        ID.setText("Código : " + cupomAtual.getUuid());
+        TextView Nome = listaItem.findViewById(R.id.text_nome);
+        Nome.setText( cupomAtual.getNome());
+
+        ImageView cupom = listaItem.findViewById(R.id.image_view);
+
+        if(Nome.getText().equals("Hamburguer")) {
+            cupom.setImageResource(R.drawable.hamburguer);
+        }
+        else if(Nome.getText().equals("Refri")){
+            cupom.setImageResource(R.drawable.refri);
+        }
+        else {
+            cupom.setImageResource(R.drawable.chef);
+        }
 
 
 

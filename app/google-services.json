@@ -66,6 +66,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895283283980:android:6fa1542dea94fd49964629",
+        "android_client_info": {
+          "package_name": "com.example.fast_food_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "895283283980-ftjdritcuhq3o79594bf35dtcis64i78.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fast_food_admin",
+            "certificate_hash": "1a31b0178753bb461691b636c91f61d33cc6b513"
+          }
+        },
+        {
+          "client_id": "895283283980-fi6okdnq6a2520dvbhgtl6av9ngpq6p0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4ACP9gJHL7X64FMEb7XCa-hRlgHQHxbQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "895283283980-fi6okdnq6a2520dvbhgtl6av9ngpq6p0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

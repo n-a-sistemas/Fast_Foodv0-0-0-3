@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,6 +50,18 @@ public class MeuAdapter extends ArrayAdapter<Cupom> {
 
         TextView descricao = listLoja.findViewById(R.id.text_view_descricao);
         descricao.setText(itemLoja.getPreco() + " Pontos");
+
+        ImageView cupom = listLoja.findViewById(R.id.image_view_cupom);
+
+        if(nome.getText().equals("Hamburguer")) {
+            cupom.setImageResource(R.drawable.hamburguer);
+        }
+        else if(nome.getText().equals("Refri")){
+            cupom.setImageResource(R.drawable.refri);
+        }
+        else {
+            cupom.setImageResource(R.drawable.chef);
+        }
 
         return listLoja;
     }

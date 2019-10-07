@@ -14,7 +14,7 @@
         android:layout_marginTop="32dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="#FDFBFB"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
         android:layout_marginTop="32dp"
         android:text="TextView"
         android:textAllCaps="false"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="#FDFBFB"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_nome" />

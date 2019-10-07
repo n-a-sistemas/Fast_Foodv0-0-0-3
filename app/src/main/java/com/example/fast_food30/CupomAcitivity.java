@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.fast_food30.adapter.CupomAdapter;
+import com.example.fast_food30.modelo.Cupom;
 import com.example.fast_food30.modelo.Usuario;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -27,10 +28,11 @@ public class CupomAcitivity extends AppCompatActivity {
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-    private List<Usuario> tarefas = new ArrayList<Usuario>();
-    private ArrayAdapter<Usuario> ArrayAdpterUsuario;
+    private List<Cupom> tarefas = new ArrayList<Cupom>();
+    private ArrayAdapter<Cupom> ArrayAdpterUsuario;
     private ListView listView;
     private SharedPreferences sharedPreferences;
+    private Cupom jorge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,11 @@ public class CupomAcitivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String ID = sharedPreferences.getString("ID","");
 
+
+
+
+
+
         databaseReference.child("usuario").child(ID).child("cupons").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -61,14 +68,14 @@ public class CupomAcitivity extends AppCompatActivity {
                 tarefas.clear();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
 
-                    Usuario usuario = snapshot.getValue(Usuario.class);
-                    tarefas.add(usuario);
+                    jorge = snapshot.getValue(Cupom.class);
+                    tarefas.add(jorge);
                 }
 
                 ArrayAdpterUsuario = new CupomAdapter(CupomAcitivity.this,
-                        (ArrayList<Usuario>) tarefas);
+                        (ArrayList<Cupom>) tarefas );
 
-                //listView.setAdapter(ArrayAdpterUsuario);
+                listView.setAdapter(ArrayAdpterUsuario);
 
 
 

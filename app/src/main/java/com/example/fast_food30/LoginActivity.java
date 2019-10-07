@@ -99,6 +99,8 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("ID",usuario.getUid());
                 editor.apply();
                 finish();
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
             }
 
             else {
