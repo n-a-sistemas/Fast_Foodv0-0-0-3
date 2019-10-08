@@ -28,7 +28,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     Integer pontoAtual;
     Integer cupomPreco;
     String ID;
+    String ultimavisita;
     //ListView
     private ListView listView;
     private List<Cupom> cupons = new ArrayList<>();
@@ -67,21 +74,19 @@ public class MainActivity extends AppCompatActivity {
         textViewPontos = findViewById(R.id.text_view_pontos);
         listView = findViewById(R.id.list_view_cupom);
         conectarBanco();
-
+        consultaUltimaVisita();
 
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String resultado = sharedPreferences.getString("LOGIN", "");
 
-        if (!Boolean.parseBoolean(resultado)) {
 
+
+
+        if (!Boolean.parseBoolean(resultado)) {
             chamaLogin();
 
         }
         else{
-
-
-
-
             leituraBanco2();
             consultaPontos();
             consultaVida();
@@ -265,30 +270,56 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void jogarAgora(View view){
+        Date dataHoraAtual = Calendar.getInstance().getTime();
+        databaseReference.child("usuario").child(ID).child("ultimavisita").setValue(dataHoraAtual);
+
+        consultaUltimaVisita();
+
+        String formato = "HH:mm:ss";
+        Date data = null;
+        try {
+           data = new SimpleDateFormat(formato).parse(ultimavisita);
+
+
+        }catch (ParseException ex){
+        }
+        //Date dataHoraAtual = new Date();
+
+
+
+        //Calendar duracao = Calendar.getInstance();
+        //duracao.setTimeInMillis();
+        long diff = (dataHoraAtual.getTime() - data.getTime()) / (1000 * 3600);
+
+
+
+
+
+
+        if (dataHoraAtual ==  data ) {
+
+            sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+            String ID = sharedPreferences.getString("ID","");
+            databaseReference.child("usuario").child(ID).child("vida").setValue(1);
+        }
+        Intent intent = new Intent(this, ActivityPerguntas.class);
+        startActivity(intent);
+
+
+
+
 
         if(vidaAtual == 0){
-
-
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.app_name);
             builder.setMessage("Suas Vidas acabaram , tente novamente amanhã");
             builder.setIcon(R.drawable.hamburguer);
             AlertDialog alert = builder.create();
             alert.show();
-
         }
         else{
-            Intent intent = new Intent(this, ActivityPerguntas.class);
-            startActivity(intent);
+
         }
-
-
-
-
-
-
-
     }
 
     public void meuscupons(View view){
@@ -352,6 +383,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    }
+    public void consultaUltimaVisita(){
+        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+                String ID = sharedPreferences.getString("ID", "");
+                ultimavisita = dataSnapshot.child(ID).child("ultimavisita").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
