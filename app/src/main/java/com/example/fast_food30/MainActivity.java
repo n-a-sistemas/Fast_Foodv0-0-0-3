@@ -270,8 +270,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void jogarAgora(View view){
-        Date dataHoraAtual = Calendar.getInstance().getTime();
-        databaseReference.child("usuario").child(ID).child("ultimavisita").setValue(dataHoraAtual);
 
         consultaUltimaVisita();
 
@@ -283,11 +281,11 @@ public class MainActivity extends AppCompatActivity {
 
         }catch (ParseException ex){
         }
-        //Date dataHoraAtual = new Date();
+        Date dataHoraAtual = new Date();
+        String ultimivisita = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
 
 
-
-        //Calendar duracao = Calendar.getInstance();
+        Calendar duracao = Calendar.getInstance();
         //duracao.setTimeInMillis();
         long diff = (dataHoraAtual.getTime() - data.getTime()) / (1000 * 3600);
 
@@ -297,10 +295,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (dataHoraAtual ==  data ) {
-
-            sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
-            String ID = sharedPreferences.getString("ID","");
             databaseReference.child("usuario").child(ID).child("vida").setValue(1);
+            databaseReference.child("usuario").child(ID).child("ultimavisita").setValue(ultimivisita);
         }
         Intent intent = new Intent(this, ActivityPerguntas.class);
         startActivity(intent);
