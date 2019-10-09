@@ -8,14 +8,17 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="533dp"
-        android:layout_height="673dp"
+        android:id="@+id/imageView6"
+        android:layout_width="500dp"
+        android:layout_height="900dp"
+        android:adjustViewBounds="false"
+        android:clickable="false"
+        android:scaleType="center"
+        android:src="@drawable/camada1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_pontos"
-        app:srcCompat="@drawable/camada1" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_jogar_agora"
@@ -43,9 +46,9 @@
         android:background="@drawable/retangulo4"
         android:onClick="meuscupons"
         android:text="@string/btn_cupons"
+        android:textColor="#FDFBFB"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#FDFBFB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_jogar_agora" />
@@ -70,7 +73,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_meus_cupons" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_meus_cupons" >
+
+    </ListView>
 
     <TextView
         android:id="@+id/text_view_pontos"

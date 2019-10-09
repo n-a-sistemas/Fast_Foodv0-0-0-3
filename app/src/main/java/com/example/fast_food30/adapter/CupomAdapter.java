@@ -59,8 +59,14 @@ public class CupomAdapter extends ArrayAdapter<Cupom> {
         else if(Nome.getText().equals("Refri")){
             cupom.setImageResource(R.drawable.refri);
         }
-        else {
-            cupom.setImageResource(R.drawable.chef);
+        else if(Nome.getText().equals("Combo")){
+            cupom.setImageResource(R.drawable.combo1);
+        }
+        else if(Nome.getText().equals("Combo2")){
+            cupom.setImageResource(R.drawable.combo2);
+        }
+        else if(Nome.getText().equals("Cerveja")){
+            cupom.setImageResource(R.drawable.beer1);
         }
 
 
