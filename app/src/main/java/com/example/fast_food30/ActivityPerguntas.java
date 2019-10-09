@@ -211,4 +211,9 @@ public class ActivityPerguntas extends AppCompatActivity {
         Pergunta tarefa = new Pergunta("6","Kung-fu Jão","Qual o nome do chines da sala ? ",lista);
         databaseReference.child("6").child(tarefa.getUuid()).setValue(tarefa);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+
 }

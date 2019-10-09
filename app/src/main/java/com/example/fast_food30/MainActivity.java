@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     Integer pontoAtual;
     Integer cupomPreco;
     String ID;
-    String ultimavisita;
+    Date ultimavisita;
     //ListView
     private ListView listView;
     private List<Cupom> cupons = new ArrayList<>();
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         textViewPontos = findViewById(R.id.text_view_pontos);
         listView = findViewById(R.id.list_view_cupom);
         conectarBanco();
-        consultaUltimaVisita();
 
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String resultado = sharedPreferences.getString("LOGIN", "");
@@ -92,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
             consultaVida();
             cupomPesquisaCompra();
             salvarDadoCupom();
+            consultaUltimaVisita();
         }
 
 
@@ -271,36 +271,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void jogarAgora(View view){
 
-        consultaUltimaVisita();
-
-        String formato = "HH:mm:ss";
-        Date data = null;
-        try {
-           data = new SimpleDateFormat(formato).parse(ultimavisita);
-
-
-        }catch (ParseException ex){
-        }
-        Date dataHoraAtual = new Date();
-        String ultimivisita = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
-
-
-        Calendar duracao = Calendar.getInstance();
-        //duracao.setTimeInMillis();
-        long diff = (dataHoraAtual.getTime() - data.getTime()) / (1000 * 3600);
-
-
-
-
-
-
-        if (dataHoraAtual ==  data ) {
-            databaseReference.child("usuario").child(ID).child("vida").setValue(1);
-            databaseReference.child("usuario").child(ID).child("ultimavisita").setValue(ultimivisita);
-        }
-        Intent intent = new Intent(this, ActivityPerguntas.class);
-        startActivity(intent);
-
 
 
 
@@ -314,7 +284,8 @@ public class MainActivity extends AppCompatActivity {
             alert.show();
         }
         else{
-
+            Intent intent = new Intent(this, ActivityPerguntas.class);
+            startActivity(intent);
         }
     }
 
@@ -388,8 +359,8 @@ public class MainActivity extends AppCompatActivity {
 
                 sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
                 String ID = sharedPreferences.getString("ID", "");
-                ultimavisita = dataSnapshot.child(ID).child("ultimavisita").getValue().toString();
-
+                ultimavisita = dataSnapshot.child(ID).child("ultimavisita").getValue(Date.class);
+                comparaVida();
             }
 
             @Override
@@ -398,8 +369,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
+    public void comparaVida(){
+        Date dataHoraAtual = Calendar.getInstance().getTime();
+
+        long diff = ((dataHoraAtual.getTime() - ultimavisita.getTime() ) /1000);
+        long igual = 300;
+
+
+        if (diff >= igual ) {
+            sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+            String ID = sharedPreferences.getString("ID", "");
+            databaseReference.child("usuario").child(ID).child("ultimavisita").setValue(dataHoraAtual);
+            databaseReference.child("usuario").child(ID).child("vida").setValue(vidaAtual + 1);
+        }
+
+
+
+    }
 
 
 
