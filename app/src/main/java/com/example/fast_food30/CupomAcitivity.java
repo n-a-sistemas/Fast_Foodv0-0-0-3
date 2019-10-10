@@ -24,8 +24,6 @@ import java.util.List;
 
 public class CupomAcitivity extends AppCompatActivity {
 
-
-
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private List<Cupom> tarefas = new ArrayList<Cupom>();
@@ -42,24 +40,17 @@ public class CupomAcitivity extends AppCompatActivity {
         eventoBanco();
     }
 
-
     private void conectarBanco(){
 
         FirebaseApp.initializeApp(CupomAcitivity.this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-
     }
 
     private void eventoBanco(){
 
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String ID = sharedPreferences.getString("ID","");
-
-
-
-
-
 
         databaseReference.child("usuario").child(ID).child("cupons").addValueEventListener(new ValueEventListener() {
             @Override
@@ -76,23 +67,13 @@ public class CupomAcitivity extends AppCompatActivity {
                         (ArrayList<Cupom>) tarefas );
 
                 listView.setAdapter(ArrayAdpterUsuario);
-
-
-
-
-
-
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
         //Leitura do Banco
-
     }
 
 

@@ -353,24 +353,38 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void consultaUltimaVisita(){
-        databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
-                String ID = sharedPreferences.getString("ID", "");
-                ultimavisita = dataSnapshot.child(ID).child("ultimavisita").getValue(Date.class);
-                comparaVida();
+
+            Date dataHoraAtual = Calendar.getInstance().getTime();
+
+            sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+            String ID = sharedPreferences.getString("ID", "");
+            databaseReference.child("usuario").child(ID).child("ultimavisita").setValue(dataHoraAtual);
+
+
+
+
+
+
+
+                databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+                        String ID = sharedPreferences.getString("ID", "");
+                        ultimavisita = dataSnapshot.child(ID).child("ultimavisita").getValue(Date.class);
+                        comparaVida();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
-
-    }
 
     public void comparaVida(){
         Date dataHoraAtual = Calendar.getInstance().getTime();

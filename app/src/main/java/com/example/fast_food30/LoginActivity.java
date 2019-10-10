@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -91,6 +93,15 @@ public class LoginActivity extends AppCompatActivity {
                             .child("usuario")
                             .child(usuario.getUid())
                             .setValue(usuario);
+
+                    Date dataHoraAtual = Calendar.getInstance().getTime();
+                    sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+                    String ID = sharedPreferences.getString("ID", "");
+                    databaseReference.child("usuario").child(ID).child("ultimavisita").setValue(dataHoraAtual);
+
+
+
+
                 }
 
                 sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
