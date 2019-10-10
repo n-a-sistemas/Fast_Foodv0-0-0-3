@@ -89,15 +89,16 @@ public class LoginActivity extends AppCompatActivity {
                     this.usuario.setPontos(0);
                     this.usuario.setCupons(cupons);
                     this.usuario.setValido(false);
-                    databaseReference
-                            .child("usuario")
-                            .child(usuario.getUid())
-                            .setValue(usuario);
 
                     Date dataHoraAtual = Calendar.getInstance().getTime();
                     sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
                     String ID = sharedPreferences.getString("ID", "");
                     databaseReference.child("usuario").child(ID).child("ultimavisita").setValue(dataHoraAtual);
+                    databaseReference
+                            .child("usuario")
+                            .child(usuario.getUid())
+                            .setValue(usuario);
+
 
 
 

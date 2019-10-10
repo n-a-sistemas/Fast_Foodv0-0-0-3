@@ -5,6 +5,7 @@ public class Cupom {
     private String nome;
     private String preco;
     private String uuid;
+    private String token = "falso";
 
 
     public Cupom(){
@@ -39,6 +40,14 @@ public class Cupom {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
     Date ultimavisita;
     //ListView
     private ListView listView;
-    private List<Cupom> cupons = new ArrayList<>();
-    private List<Cupom> cuponsComprados = new ArrayList<>();
+    private List<Cupom> cupons = new ArrayList<Cupom>();
+    private List<Cupom> cuponsComprados = new ArrayList<Cupom>();
 
     private ArrayAdapter<Cupom> arrayAdapterLoja;
 
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             cupomPesquisaCompra();
             salvarDadoCupom();
             consultaUltimaVisita();
+            consultaCupomUsuario();
         }
 
 
@@ -126,8 +128,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
 
-                        compraCupom(cupons.get(i));
-                        return ;
+                       ID = cupons.get(i).getUuid();
+
+                       cuponsComprados.add(cupons.get(i));
+                        compraCupom(cuponsComprados);
 
                     }
                 });
@@ -174,10 +178,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void compraCupom(final Cupom cupom){
+    public void compraCupom(final List<Cupom> cupoms){
 
-        ID = cupom.getUuid();
-        consultaCupom();
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.app_name);
@@ -186,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+            consultaCupom();
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -194,17 +196,19 @@ public class MainActivity extends AppCompatActivity {
 
 
                 if(pontoAtual >= cupomPreco) {
-
-
                     pontoAtual -= cupomPreco;
                     sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
                     String ID = sharedPreferences.getString("ID", "");
                     databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
 
+                    for (int j =0 ; j<cupoms.size() ; j++){
+                        //if (cupoms.get(j).getToken().equals("falso")){
+                            cupoms.get(j).setToken(UUID.randomUUID().toString());
+                        //}
 
-                    cuponsComprados.add(new Cupom(cupom.getNome(),cupom.getPreco(),UUID.randomUUID().toString()));
-
-                    databaseReference.child("usuario").child(ID).child("cupons").setValue(cuponsComprados);
+                       databaseReference.child("usuario").child(ID).child("cupons").child(cupoms.get(j).getToken()).setValue(cupoms.get(j));
+                    }
+                    //databaseReference.child("usuario").child(ID).child("cupons").push().setValue(cupoms);
                 }
 
                 else {
@@ -334,34 +338,26 @@ public class MainActivity extends AppCompatActivity {
     public void consultaCupom( ){
 
         databaseReference.child("Cupom").addValueEventListener(new ValueEventListener() {
-            @Override
+           @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                cupomPreco = Integer.parseInt(dataSnapshot.child(ID).child("preco").getValue().toString());
+              cupomPreco = Integer.parseInt(dataSnapshot.child(ID).child("preco").getValue().toString());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+           }
+       });
 
 
 
 
 
     }
+
     public void consultaUltimaVisita(){
-
-
-            Date dataHoraAtual = Calendar.getInstance().getTime();
-
-            sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
-            String ID = sharedPreferences.getString("ID", "");
-            databaseReference.child("usuario").child(ID).child("ultimavisita").setValue(dataHoraAtual);
-
-
 
 
 
@@ -390,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
         Date dataHoraAtual = Calendar.getInstance().getTime();
 
         long diff = ((dataHoraAtual.getTime() - ultimavisita.getTime() ) /1000);
-        long igual = 300;
+        long igual = 10;
 
 
         if (diff >= igual ) {
@@ -403,6 +399,34 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    public void consultaCupomUsuario(){
+
+        sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+        String ID = sharedPreferences.getString("ID", "");
+        databaseReference.child("usuario").child(ID).child("cupons").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                cuponsComprados.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Cupom cupom = snapshot.getValue(Cupom.class);
+                    cuponsComprados.add(cupom);
+                }
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 
 
 
