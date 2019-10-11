@@ -29,6 +29,7 @@ public class CupomAcitivity extends AppCompatActivity {
     private List<Cupom> tarefas = new ArrayList<Cupom>();
     private ArrayAdapter<Cupom> ArrayAdpterUsuario;
     private ListView listView;
+
     private SharedPreferences sharedPreferences;
     private Cupom jorge;
     @Override

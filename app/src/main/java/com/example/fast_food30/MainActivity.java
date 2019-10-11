@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
     Integer cupomPreco;
     String ID;
     Date ultimavisita;
+    private List<String> Aleatorio = new ArrayList<String>();
+
+
     //ListView
     private ListView listView;
     private List<Cupom> cupons = new ArrayList<Cupom>();
@@ -201,23 +204,31 @@ public class MainActivity extends AppCompatActivity {
                     String ID = sharedPreferences.getString("ID", "");
                     databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
 
-                    for (int j =0 ; j<cupoms.size() ; j++){
-                        //if (cupoms.get(j).getToken().equals("falso")){
-                            cupoms.get(j).setToken(UUID.randomUUID().toString());
-                        //}
 
-                       databaseReference.child("usuario").child(ID).child("cupons").child(cupoms.get(j).getToken()).setValue(cupoms.get(j));
+
+
+
+                        for (int j = 0; j < cupoms.size(); j++) {
+                        //    if (cupoms.get(j).getToken().equals("falso")) {
+
+
+                            UUID uuid = UUID.randomUUID();
+                            String myRandom = uuid.toString();
+
+                            cupoms.get(j).setToken(myRandom.substring(0,6));
+                          //  }
+
+                            //databaseReference.child("usuario").child(ID).child("cupons").child(cupoms.get(j).getToken()).setValue(cupoms.get(j));
+                        }
+                        databaseReference.child("usuario").child(ID).child("cupons").setValue(cupoms);
+                        //databaseReference.child("usuario").child(ID).child("cupons").push().setValue(cupoms);
+                    } else {
+
+
                     }
-                    //databaseReference.child("usuario").child(ID).child("cupons").push().setValue(cupoms);
-                }
-
-                else {
-
 
                 }
 
-
-            }
 
         });
 

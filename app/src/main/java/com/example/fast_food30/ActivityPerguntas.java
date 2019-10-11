@@ -203,6 +203,7 @@ public class ActivityPerguntas extends AppCompatActivity {
 
     public void salvarDado(){
         List<String> lista = new ArrayList<String>();
+
         lista.add("Kung-fu Jão");
         lista.add("Tochiro");
         lista.add("Kawasaki");

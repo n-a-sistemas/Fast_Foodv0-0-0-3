@@ -47,7 +47,7 @@ public class CupomAdapter extends ArrayAdapter<Cupom> {
 
 
         TextView ID = listaItem.findViewById(R.id.text_id);
-        ID.setText("Código : " + cupomAtual.getUuid());
+        ID.setText("Código : " + cupomAtual.getToken());
         TextView Nome = listaItem.findViewById(R.id.text_nome);
         Nome.setText( cupomAtual.getNome());
 
