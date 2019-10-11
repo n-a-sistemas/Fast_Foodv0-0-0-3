@@ -48,6 +48,7 @@ public class ActivityPerguntas extends AppCompatActivity {
     Integer pontoAtual;
     Integer vidaAtual;
     Integer vidaPerdida = -1;
+    private String respostaCorretissima;
     private List<Button> botoes = new ArrayList<Button>();
 
 
@@ -66,7 +67,8 @@ public class ActivityPerguntas extends AppCompatActivity {
         textViewPontos = findViewById(R.id.text_view_pontos);
         textViewVida = findViewById(R.id.text_view_vida);
         conectarBanco();
-        leituraBanco();
+       // leituraBanco();
+        lerBanco();
 
     }
             private void conectarBanco(){
@@ -77,89 +79,84 @@ public class ActivityPerguntas extends AppCompatActivity {
 
              }
 
-
-
-             public void leituraBanco(){
-
             Random random = new Random();
-            int valor = random.nextInt(6) + 1;
-            if(!inteiros.contains(valor)) {
-                inteiros.add(valor);
+            int valor = random.nextInt(9) + 1;
+
+            private void lerBanco(){
+            databaseReference.child("Perguntas").child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                databaseReference.child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
+                        final Pergunta pergunta = dataSnapshot.getValue(Pergunta.class);
 
-                    @Override
-                    public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                       respostaCorretissima = pergunta.getResposta_correta();
+                        perguntas.add(pergunta);
+                        btn1.setText(pergunta.getRespostas().get(0));
+                        btn2.setText(pergunta.getRespostas().get(1));
+                        btn3.setText(pergunta.getRespostas().get(2));
+                        btn4.setText(pergunta.getRespostas().get(3));
+                        btn5.setText(pergunta.getRespostas().get(4));
+                        textViewTitulo.setText(pergunta.getTitulo_pergunta());
 
-                        perguntas.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                            final Pergunta pergunta = snapshot.getValue(Pergunta.class);
-                            pergunta.embaralhar();
-
-                            perguntas.add(pergunta);
-                            btn1.setText(pergunta.getRespostas().get(0));
-                            btn2.setText(pergunta.getRespostas().get(1));
-                            btn3.setText(pergunta.getRespostas().get(2));
-                            btn4.setText(pergunta.getRespostas().get(3));
-                            btn5.setText(pergunta.getRespostas().get(4));
-                            textViewTitulo.setText(pergunta.getTitulo_pergunta());
-
-                            botoes.add(btn1);
-                            botoes.add(btn2);
-                            botoes.add(btn3);
-                            botoes.add(btn4);
-                            botoes.add(btn5);
-                            consultaPontos();
-                            consultaVida();
-                            for (int i = 0; i < 5; i++) {
+                        botoes.add(btn1);
+                        botoes.add(btn2);
+                        botoes.add(btn3);
+                        botoes.add(btn4);
+                        botoes.add(btn5);
 
 
-                                botoes.get(i).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
 
-                                        Button botao = (Button) view;
-                                        String respostaBotao = botao.getText().toString();
+                        consultaPontos();
+                        consultaVida();
+                        for (int i = 0; i < 5; i++) {
 
 
-                                        if (pergunta.getResposta_correta().equals(respostaBotao)) {
+                            botoes.get(i).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
 
-                                            sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
-                                            String ID = sharedPreferences.getString("ID","");
-                                            pontoAtual += pontoganho;
-                                            databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
-                                            leituraBanco();
-                                        }
-                                        else {
+                                    Button botao = (Button) view;
+                                    String respostaBotao = botao.getText().toString();
 
-                                            sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
-                                            String ID = sharedPreferences.getString("ID","");
-                                            vidaAtual += vidaPerdida;
-                                            databaseReference.child("usuario").child(ID).child("vida").setValue(vidaAtual);
-                                            finish();
-                                        }
+
+                                    if (respostaCorretissima.equals(respostaBotao)) {
+
+                                        sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                        String ID = sharedPreferences.getString("ID","");
+                                        pontoAtual += pontoganho;
+                                        databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
+                                        lerBanco();
                                     }
-                                });
 
+                                    else {
 
-                             }
-
-
+                                        sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
+                                        String ID = sharedPreferences.getString("ID","");
+                                        vidaAtual += vidaPerdida;
+                                        databaseReference.child("usuario").child(ID).child("vida").setValue(vidaAtual);
+                                        finish();
+                                    }
+                                }
+                            });
 
 
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
             }
-        else {
-            leituraBanco();
-        }
-    }
+
+
+
+
 
     public void consultaVida() {
         databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
@@ -201,17 +198,7 @@ public class ActivityPerguntas extends AppCompatActivity {
 
 
 
-    public void salvarDado(){
-        List<String> lista = new ArrayList<String>();
 
-        lista.add("Kung-fu Jão");
-        lista.add("Tochiro");
-        lista.add("Kawasaki");
-        lista.add("Miagy");
-        lista.add("Lee");
-        Pergunta tarefa = new Pergunta("6","Kung-fu Jão","Qual o nome do chines da sala ? ",lista);
-        databaseReference.child("6").child(tarefa.getUuid()).setValue(tarefa);
-    }
 
     @Override
     public void onBackPressed() {

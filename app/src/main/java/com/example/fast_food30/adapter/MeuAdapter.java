@@ -54,13 +54,13 @@ public class MeuAdapter extends ArrayAdapter<Cupom> {
         ImageView cupom = listLoja.findViewById(R.id.image_view_cupom);
 
         if(nome.getText().equals("Hamburguer")) {
-            cupom.setImageResource(R.drawable.hamburguer);
+            cupom.setImageResource(R.drawable.hamburguer3);
         }
         else if(nome.getText().equals("Refri")){
-            cupom.setImageResource(R.drawable.refri);
+            cupom.setImageResource(R.drawable.refri3);
         }
         else {
-            cupom.setImageResource(R.drawable.chef);
+            cupom.setImageResource(R.drawable.combo1);
         }
 
         return listLoja;

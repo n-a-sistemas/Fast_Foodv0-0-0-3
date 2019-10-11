@@ -78,15 +78,7 @@ public class Pergunta {
     }
 
 
-    @Override
-    public String toString() {
-        return "Pergunta{" +
-                "uuid='" + uuid + '\'' +
-                ", resposta_correta='" + resposta_correta + '\'' +
-                ", titulo_pergunta='" + titulo_pergunta + '\'' +
-                ", respostas=" + respostas +
-                '}';
-    }
+
 }
 
 
