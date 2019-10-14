@@ -79,18 +79,22 @@ public class ActivityPerguntas extends AppCompatActivity {
 
              }
 
-            Random random = new Random();
-            int valor = random.nextInt(9) + 1;
+
 
             private void lerBanco(){
+
+            Random random = new Random();
+            final int valor = random.nextInt(3);
+            //int valor = 0;
+
             databaseReference.child("Perguntas").child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                        final Pergunta pergunta = dataSnapshot.getValue(Pergunta.class);
+                        Pergunta pergunta = dataSnapshot.child(Integer.toString(valor)).getValue(Pergunta.class);
 
-                       respostaCorretissima = pergunta.getResposta_correta();
+                        respostaCorretissima = pergunta.getResposta_correta();
                         perguntas.add(pergunta);
                         btn1.setText(pergunta.getRespostas().get(0));
                         btn2.setText(pergunta.getRespostas().get(1));

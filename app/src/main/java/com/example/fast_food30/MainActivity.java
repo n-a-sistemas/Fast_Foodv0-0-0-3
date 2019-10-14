@@ -381,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
                         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
                         String ID = sharedPreferences.getString("ID", "");
                         ultimavisita = dataSnapshot.child(ID).child("ultimavisita").getValue(Date.class);
-                        comparaVida();
+                        //comparaVida();
                     }
 
                     @Override
