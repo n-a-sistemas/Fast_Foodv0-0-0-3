@@ -7,7 +7,6 @@ public class Cupom {
     private String uuid;
     private String token = "falso";
 
-
     public Cupom(){
 
     }

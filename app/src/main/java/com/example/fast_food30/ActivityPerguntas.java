@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
-
 public class ActivityPerguntas extends AppCompatActivity {
     private ListView listView;
     private List<Pergunta> perguntas = new ArrayList<Pergunta>();
@@ -35,11 +33,11 @@ public class ActivityPerguntas extends AppCompatActivity {
     private ArrayAdapter<Pergunta> arrayAdapterPergunta ;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-    private  Button  btn1;
-    private  Button  btn2;
-    private  Button  btn3;
-    private  Button  btn4;
-    private  Button  btn5;
+    private Button btn1;
+    private Button btn2;
+    private Button btn3;
+    private Button btn4;
+    private Button btn5;
     private TextView textViewTitulo;
     private TextView textViewVida;
     private TextView textViewPontos;
@@ -50,9 +48,6 @@ public class ActivityPerguntas extends AppCompatActivity {
     Integer vidaPerdida = -1;
     private String respostaCorretissima;
     private List<Button> botoes = new ArrayList<Button>();
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,60 +64,54 @@ public class ActivityPerguntas extends AppCompatActivity {
         conectarBanco();
        // leituraBanco();
         lerBanco();
-
     }
-            private void conectarBanco(){
 
-            FirebaseApp.initializeApp(ActivityPerguntas.this);
-            firebaseDatabase = FirebaseDatabase.getInstance();
-            databaseReference = firebaseDatabase.getReference();
+    private void conectarBanco(){
 
-             }
+        FirebaseApp.initializeApp(ActivityPerguntas.this);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+    }
 
+    private void lerBanco(){
 
-
-            private void lerBanco(){
-
-            Random random = new Random();
-            final int valor = random.nextInt(3);
-            //int valor = 0;
+        Random random = new Random();
+        final int valor = random.nextInt(7);
+        //int valor = 0;
 
             databaseReference.child("Perguntas").child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                    Pergunta pergunta = dataSnapshot.child(Integer.toString(valor)).getValue(Pergunta.class);
 
-                        Pergunta pergunta = dataSnapshot.child(Integer.toString(valor)).getValue(Pergunta.class);
+                    pergunta.embaralhar();
 
-                        respostaCorretissima = pergunta.getResposta_correta();
-                        perguntas.add(pergunta);
-                        btn1.setText(pergunta.getRespostas().get(0));
-                        btn2.setText(pergunta.getRespostas().get(1));
-                        btn3.setText(pergunta.getRespostas().get(2));
-                        btn4.setText(pergunta.getRespostas().get(3));
-                        btn5.setText(pergunta.getRespostas().get(4));
-                        textViewTitulo.setText(pergunta.getTitulo_pergunta());
+                    respostaCorretissima = pergunta.getResposta_correta();
+                    perguntas.add(pergunta);
+                    btn1.setText(pergunta.getRespostas().get(0));
+                    btn2.setText(pergunta.getRespostas().get(1));
+                    btn3.setText(pergunta.getRespostas().get(2));
+                    btn4.setText(pergunta.getRespostas().get(3));
+                    btn5.setText(pergunta.getRespostas().get(4));
+                    textViewTitulo.setText(pergunta.getTitulo_pergunta());
 
-                        botoes.add(btn1);
-                        botoes.add(btn2);
-                        botoes.add(btn3);
-                        botoes.add(btn4);
-                        botoes.add(btn5);
+                    botoes.add(btn1);
+                    botoes.add(btn2);
+                    botoes.add(btn3);
+                    botoes.add(btn4);
+                    botoes.add(btn5);
 
+                    consultaPontos();
+                    consultaVida();
+                    for (int i = 0; i < 5; i++) {
 
-
-                        consultaPontos();
-                        consultaVida();
-                        for (int i = 0; i < 5; i++) {
-
-
-                            botoes.get(i).setOnClickListener(new View.OnClickListener() {
+                        botoes.get(i).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
 
                                     Button botao = (Button) view;
                                     String respostaBotao = botao.getText().toString();
-
 
                                     if (respostaCorretissima.equals(respostaBotao)) {
 
@@ -142,25 +131,15 @@ public class ActivityPerguntas extends AppCompatActivity {
                                         finish();
                                     }
                                 }
-                            });
-
-
-                        }
-
-
+                        });
+                    }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
             });
-
-            }
-
-
-
-
+    }
 
     public void consultaVida() {
         databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
@@ -170,7 +149,6 @@ public class ActivityPerguntas extends AppCompatActivity {
                 sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
                 String ID = sharedPreferences.getString("ID", "");
                 vidaAtual = Integer.parseInt(dataSnapshot.child(ID).child("vida").getValue().toString());
-
             }
 
             @Override
@@ -178,7 +156,6 @@ public class ActivityPerguntas extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void consultaPontos(){
@@ -189,7 +166,6 @@ public class ActivityPerguntas extends AppCompatActivity {
                 sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
                 String ID = sharedPreferences.getString("ID","");
                 pontoAtual = Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
-
             }
 
             @Override
@@ -199,13 +175,7 @@ public class ActivityPerguntas extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
     @Override
     public void onBackPressed() {
     }
-
 }

@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String resultado = sharedPreferences.getString("LOGIN", "");
 
-
         sharedPreferences = getSharedPreferences("ID" , Context.MODE_PRIVATE);
 
         conectarBancoUsuario();
@@ -98,11 +97,6 @@ public class LoginActivity extends AppCompatActivity {
                             .child("usuario")
                             .child(usuario.getUid())
                             .setValue(usuario);
-
-
-
-
-
                 }
 
                 sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
@@ -114,15 +108,12 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
             }
-
             else {
                 if(response == null){
                     finish();
                 }
             }
-
         }
-
     }
 
     public void conectarBancoUsuario(){

@@ -34,7 +34,6 @@ public class CupomAdapter extends ArrayAdapter<Cupom> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-
         View listaItem = convertView;
 
         //Inicializando o layout_list na ListView
@@ -44,8 +43,6 @@ public class CupomAdapter extends ArrayAdapter<Cupom> {
 
         Cupom cupomAtual = cupons.get(position);
 
-
-
         TextView ID = listaItem.findViewById(R.id.text_id);
         ID.setText("Código : " + cupomAtual.getToken());
         TextView Nome = listaItem.findViewById(R.id.text_nome);
@@ -54,24 +51,14 @@ public class CupomAdapter extends ArrayAdapter<Cupom> {
         ImageView cupom = listaItem.findViewById(R.id.image_view);
 
         if(Nome.getText().equals("Hamburguer")) {
-            cupom.setImageResource(R.drawable.hamburguer);
+            cupom.setImageResource(R.drawable.hamburguer3);
         }
         else if(Nome.getText().equals("Refri")){
-            cupom.setImageResource(R.drawable.refri);
+            cupom.setImageResource(R.drawable.refri3);
         }
         else if(Nome.getText().equals("Combo")){
             cupom.setImageResource(R.drawable.combo1);
         }
-        else if(Nome.getText().equals("Combo2")){
-            cupom.setImageResource(R.drawable.combo2);
-        }
-        else if(Nome.getText().equals("Cerveja")){
-            cupom.setImageResource(R.drawable.beer1);
-        }
-
-
-
-
         return listaItem;
     }
 }

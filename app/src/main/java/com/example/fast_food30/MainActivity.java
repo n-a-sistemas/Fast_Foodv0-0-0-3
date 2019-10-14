@@ -53,12 +53,10 @@ public class MainActivity extends AppCompatActivity {
     Date ultimavisita;
     private List<String> Aleatorio = new ArrayList<String>();
 
-
     //ListView
     private ListView listView;
     private List<Cupom> cupons = new ArrayList<Cupom>();
     private List<Cupom> cuponsComprados = new ArrayList<Cupom>();
-
     private ArrayAdapter<Cupom> arrayAdapterLoja;
 
     //Banco
@@ -67,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Shared Preferences
     private SharedPreferences sharedPreferences;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +79,8 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String resultado = sharedPreferences.getString("LOGIN", "");
 
-
-
-
         if (!Boolean.parseBoolean(resultado)) {
             chamaLogin();
-
         }
         else{
             leituraBanco2();
@@ -98,14 +91,7 @@ public class MainActivity extends AppCompatActivity {
             consultaUltimaVisita();
             consultaCupomUsuario();
         }
-
-
-
-
     }
-
-
-
 
     private void conectarBanco(){
         FirebaseApp.initializeApp(MainActivity.this);
@@ -126,16 +112,14 @@ public class MainActivity extends AppCompatActivity {
                         ArrayList<Cupom>) cupons);
                 listView.setAdapter(arrayAdapterLoja);
 
-               listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
 
                        ID = cupons.get(i).getUuid();
 
                        cuponsComprados.add(cupons.get(i));
-                        compraCupom(cuponsComprados);
-
+                       compraCupom(cuponsComprados);
                     }
                 });
             }
@@ -152,15 +136,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
-
-
                 sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
                 String ID = sharedPreferences.getString("ID","");
 
-
-             textViewVida.setText(dataSnapshot.child(ID).child("vida").getValue().toString());
-              textViewPontos.setText(dataSnapshot.child(ID).child("pontos").getValue().toString());
+                textViewVida.setText(dataSnapshot.child(ID).child("vida").getValue().toString());
+                textViewPontos.setText(dataSnapshot.child(ID).child("pontos").getValue().toString());
             }
 
             @Override
@@ -170,33 +150,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-
     public void chamaLogin(){
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
-
-
     }
 
     public void compraCupom(final List<Cupom> cupoms){
-
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.app_name);
         builder.setMessage("Você deseja comprar esse cupom?");
         builder.setIcon(R.drawable.hamburguer);
 
-
-
             consultaCupom();
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-            //É necessário apagar o cupom e ele ir para a tela de cupom
-
 
                 if(pontoAtual >= cupomPreco) {
                     pontoAtual -= cupomPreco;
@@ -204,13 +173,8 @@ public class MainActivity extends AppCompatActivity {
                     String ID = sharedPreferences.getString("ID", "");
                     databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
 
-
-
-
-
                         for (int j = 0; j < cupoms.size(); j++) {
                         //    if (cupoms.get(j).getToken().equals("falso")) {
-
 
                             UUID uuid = UUID.randomUUID();
                             String myRandom = uuid.toString();
@@ -224,12 +188,8 @@ public class MainActivity extends AppCompatActivity {
                         //databaseReference.child("usuario").child(ID).child("cupons").push().setValue(cupoms);
                     } else {
 
-
                     }
-
                 }
-
-
         });
 
         builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -244,20 +204,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void salvarDadoCupom() {
 
-
       Cupom cupom1 = new Cupom("Refri","50","1");
       databaseReference.child("Cupom").child(cupom1.getUuid()).setValue(cupom1);
 
-        Cupom cupom2 = new Cupom("Hamburguer","150","2");
-        databaseReference.child("Cupom").child(cupom2.getUuid()).setValue(cupom2);
+      Cupom cupom2 = new Cupom("Hamburguer","150","2");
+      databaseReference.child("Cupom").child(cupom2.getUuid()).setValue(cupom2);
 
-
-
-        Cupom cupom3 = new Cupom("Combo","300","3");
-        databaseReference.child("Cupom").child(cupom3.getUuid()).setValue(cupom3);
-
-
-
+      Cupom cupom3 = new Cupom("Combo","300","3");
+      databaseReference.child("Cupom").child(cupom3.getUuid()).setValue(cupom3);
     }
 
     @Override
@@ -283,12 +237,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void jogarAgora(View view){
-
-
-
-
 
         if(vidaAtual == 0){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -319,7 +268,6 @@ public class MainActivity extends AppCompatActivity {
                 sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
                 String ID = sharedPreferences.getString("ID", "");
                 vidaAtual = Integer.parseInt(dataSnapshot.child(ID).child("vida").getValue().toString());
-
             }
 
             @Override
@@ -327,7 +275,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
     public void consultaPontos(){
         databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
@@ -337,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
                 sharedPreferences = getSharedPreferences("LOGIN",Context.MODE_PRIVATE);
                 String ID = sharedPreferences.getString("ID","");
                 pontoAtual = Integer.parseInt(dataSnapshot.child(ID).child("pontos").getValue().toString());
-
             }
 
             @Override
@@ -352,27 +298,16 @@ public class MainActivity extends AppCompatActivity {
            @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
               cupomPreco = Integer.parseInt(dataSnapshot.child(ID).child("preco").getValue().toString());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
            }
        });
-
-
-
-
-
     }
 
     public void consultaUltimaVisita(){
-
-
-
-
 
                 databaseReference.child("usuario").addValueEventListener(new ValueEventListener() {
                     @Override
@@ -386,12 +321,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
                     }
                 });
             }
-
-
 
     public void comparaVida(){
         Date dataHoraAtual = Calendar.getInstance().getTime();
@@ -399,16 +331,12 @@ public class MainActivity extends AppCompatActivity {
         long diff = ((dataHoraAtual.getTime() - ultimavisita.getTime() ) /1000);
         long igual = 10;
 
-
         if (diff >= igual ) {
             sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
             String ID = sharedPreferences.getString("ID", "");
             databaseReference.child("usuario").child(ID).child("ultimavisita").setValue(dataHoraAtual);
             databaseReference.child("usuario").child(ID).child("vida").setValue(vidaAtual + 1);
         }
-
-
-
     }
     public void consultaCupomUsuario(){
 
@@ -422,12 +350,6 @@ public class MainActivity extends AppCompatActivity {
                     Cupom cupom = snapshot.getValue(Cupom.class);
                     cuponsComprados.add(cupom);
                 }
-
-
-
-
-
-
             }
 
             @Override
@@ -435,14 +357,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
-
-
-
-
-
-
-
 }

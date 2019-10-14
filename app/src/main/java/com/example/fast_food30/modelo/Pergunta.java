@@ -8,34 +8,19 @@ import java.util.*;
 
 public class Pergunta {
 
-
-
     private String uuid;
     private String resposta_correta;
     private String titulo_pergunta;
     private List<String> respostas;
 
-
     public Pergunta(){
 
     }
 
-
-
     public void  embaralhar(){
 
         Collections.shuffle(respostas);
-
-
-
-
-
-
     }
-
-
-
-
 
     public String getUuid() {
         return uuid;
@@ -69,16 +54,12 @@ public class Pergunta {
         this.respostas = respostas;
     }
 
-
     public Pergunta(String uuid, String resposta_correta, String titulo_pergunta, List<String> respostas) {
         this.uuid = uuid;
         this.resposta_correta = resposta_correta;
         this.titulo_pergunta = titulo_pergunta;
         this.respostas = respostas;
     }
-
-
-
 }
 
 

@@ -10,7 +10,6 @@ public class Usuario {
     private Integer pontos;
     private List<Cupom> cupons;
 
-
     public Usuario(){
 
     }
