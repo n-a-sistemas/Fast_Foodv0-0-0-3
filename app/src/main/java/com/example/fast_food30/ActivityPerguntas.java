@@ -50,8 +50,7 @@ public class ActivityPerguntas extends AppCompatActivity {
     Integer vidaPerdida = -1;
     private String respostaCorretissima;
     private List<Button> botoes = new ArrayList<Button>();
-
-
+    private Pergunta embaralhaPergunta;
 
 
     @Override
@@ -70,21 +69,23 @@ public class ActivityPerguntas extends AppCompatActivity {
        // leituraBanco();
         lerBanco();
 
+
     }
-            private void conectarBanco(){
+
+    private void conectarBanco(){
 
             FirebaseApp.initializeApp(ActivityPerguntas.this);
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference();
 
-             }
+    }
 
 
 
             private void lerBanco(){
 
             Random random = new Random();
-            final int valor = random.nextInt(3);
+            final int valor = random.nextInt(7);
             //int valor = 0;
 
             databaseReference.child("Perguntas").child(Integer.toString(valor)).addValueEventListener(new ValueEventListener() {
@@ -111,6 +112,7 @@ public class ActivityPerguntas extends AppCompatActivity {
 
 
 
+
                         consultaPontos();
                         consultaVida();
                         for (int i = 0; i < 5; i++) {
@@ -131,6 +133,7 @@ public class ActivityPerguntas extends AppCompatActivity {
                                         pontoAtual += pontoganho;
                                         databaseReference.child("usuario").child(ID).child("pontos").setValue(pontoAtual);
                                         lerBanco();
+
                                     }
 
                                     else {
@@ -198,11 +201,6 @@ public class ActivityPerguntas extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
 
     @Override
     public void onBackPressed() {

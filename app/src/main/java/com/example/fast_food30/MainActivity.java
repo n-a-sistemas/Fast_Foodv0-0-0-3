@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 String ID = sharedPreferences.getString("ID","");
 
 
-             textViewVida.setText(dataSnapshot.child(ID).child("vida").getValue().toString());
+              textViewVida.setText(dataSnapshot.child(ID).child("vida").getValue().toString());
               textViewPontos.setText(dataSnapshot.child(ID).child("pontos").getValue().toString());
             }
 
